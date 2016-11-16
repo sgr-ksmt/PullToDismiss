@@ -7,13 +7,20 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4D19BAD21DDDB00F0027383B /* SampleTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D19BAD11DDDB00F0027383B /* SampleTableViewController.swift */; };
+		4D19BAD41DDDE1DD0027383B /* SampleCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D19BAD31DDDE1DD0027383B /* SampleCollectionViewController.swift */; };
+		4D19BAD61DDDE49A0027383B /* SampleCollectionLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D19BAD51DDDE49A0027383B /* SampleCollectionLayout.swift */; };
+		4D19BAD81DDDE8050027383B /* SampleCustomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D19BAD71DDDE8050027383B /* SampleCustomViewController.swift */; };
+		4D19BADA1DDDE80F0027383B /* SampleCustomViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4D19BAD91DDDE80F0027383B /* SampleCustomViewController.storyboard */; };
 		4D5A351B1DDB21F100ED9D54 /* PullToDismiss.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D5A351A1DDB21F100ED9D54 /* PullToDismiss.framework */; };
 		4D5A351C1DDB21F100ED9D54 /* PullToDismiss.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4D5A351A1DDB21F100ED9D54 /* PullToDismiss.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		4D5A35211DDBFD7200ED9D54 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D5A35201DDBFD7200ED9D54 /* Config.swift */; };
 		4DDE88051DDAA1DC00154B59 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DDE88041DDAA1DC00154B59 /* AppDelegate.swift */; };
 		4DDE88071DDAA1DC00154B59 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DDE88061DDAA1DC00154B59 /* ViewController.swift */; };
 		4DDE880A1DDAA1DC00154B59 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4DDE88081DDAA1DC00154B59 /* Main.storyboard */; };
 		4DDE880C1DDAA1DC00154B59 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4DDE880B1DDAA1DC00154B59 /* Assets.xcassets */; };
 		4DDE880F1DDAA1DC00154B59 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4DDE880D1DDAA1DC00154B59 /* LaunchScreen.storyboard */; };
+		4DE54A291DDD4B4100568F7B /* UIColor+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DE54A281DDD4B4100568F7B /* UIColor+Hex.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -31,7 +38,13 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		4D19BAD11DDDB00F0027383B /* SampleTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SampleTableViewController.swift; path = ../../../../../../works/PullToDismiss/PullToDismiss/SampleTableViewController.swift; sourceTree = "<group>"; };
+		4D19BAD31DDDE1DD0027383B /* SampleCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SampleCollectionViewController.swift; sourceTree = "<group>"; };
+		4D19BAD51DDDE49A0027383B /* SampleCollectionLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SampleCollectionLayout.swift; sourceTree = "<group>"; };
+		4D19BAD71DDDE8050027383B /* SampleCustomViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SampleCustomViewController.swift; sourceTree = "<group>"; };
+		4D19BAD91DDDE80F0027383B /* SampleCustomViewController.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SampleCustomViewController.storyboard; sourceTree = "<group>"; };
 		4D5A351A1DDB21F100ED9D54 /* PullToDismiss.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = PullToDismiss.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4D5A35201DDBFD7200ED9D54 /* Config.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		4DDE88011DDAA1DC00154B59 /* Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Demo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4DDE88041DDAA1DC00154B59 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4DDE88061DDAA1DC00154B59 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -39,6 +52,7 @@
 		4DDE880B1DDAA1DC00154B59 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4DDE880E1DDAA1DC00154B59 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4DDE88101DDAA1DC00154B59 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4DE54A281DDD4B4100568F7B /* UIColor+Hex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Hex.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,10 +89,17 @@
 			children = (
 				4DDE88041DDAA1DC00154B59 /* AppDelegate.swift */,
 				4DDE88061DDAA1DC00154B59 /* ViewController.swift */,
+				4D19BAD11DDDB00F0027383B /* SampleTableViewController.swift */,
+				4D19BAD31DDDE1DD0027383B /* SampleCollectionViewController.swift */,
 				4DDE88081DDAA1DC00154B59 /* Main.storyboard */,
 				4DDE880B1DDAA1DC00154B59 /* Assets.xcassets */,
 				4DDE880D1DDAA1DC00154B59 /* LaunchScreen.storyboard */,
 				4DDE88101DDAA1DC00154B59 /* Info.plist */,
+				4D5A35201DDBFD7200ED9D54 /* Config.swift */,
+				4DE54A281DDD4B4100568F7B /* UIColor+Hex.swift */,
+				4D19BAD51DDDE49A0027383B /* SampleCollectionLayout.swift */,
+				4D19BAD71DDDE8050027383B /* SampleCustomViewController.swift */,
+				4D19BAD91DDDE80F0027383B /* SampleCustomViewController.storyboard */,
 			);
 			path = Demo;
 			sourceTree = "<group>";
@@ -144,6 +165,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4D19BADA1DDDE80F0027383B /* SampleCustomViewController.storyboard in Resources */,
 				4DDE880F1DDAA1DC00154B59 /* LaunchScreen.storyboard in Resources */,
 				4DDE880C1DDAA1DC00154B59 /* Assets.xcassets in Resources */,
 				4DDE880A1DDAA1DC00154B59 /* Main.storyboard in Resources */,
@@ -157,8 +179,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4D19BAD61DDDE49A0027383B /* SampleCollectionLayout.swift in Sources */,
+				4D19BAD21DDDB00F0027383B /* SampleTableViewController.swift in Sources */,
 				4DDE88071DDAA1DC00154B59 /* ViewController.swift in Sources */,
+				4DE54A291DDD4B4100568F7B /* UIColor+Hex.swift in Sources */,
 				4DDE88051DDAA1DC00154B59 /* AppDelegate.swift in Sources */,
+				4D19BAD41DDDE1DD0027383B /* SampleCollectionViewController.swift in Sources */,
+				4D19BAD81DDDE8050027383B /* SampleCustomViewController.swift in Sources */,
+				4D5A35211DDBFD7200ED9D54 /* Config.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -282,7 +310,7 @@
 				DEVELOPMENT_TEAM = KW3G83N6K6;
 				INFOPLIST_FILE = Demo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "-.Demo";
+				PRODUCT_BUNDLE_IDENTIFIER = "-.PullToDismiss.Demo";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
@@ -295,7 +323,7 @@
 				DEVELOPMENT_TEAM = KW3G83N6K6;
 				INFOPLIST_FILE = Demo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "-.Demo";
+				PRODUCT_BUNDLE_IDENTIFIER = "-.PullToDismiss.Demo";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};

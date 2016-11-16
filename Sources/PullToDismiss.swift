@@ -18,12 +18,40 @@ open class PullToDismiss: NSObject {
     public enum Background {
         case none
         case shadow(UIColor, CGFloat) // color(RGB), alpha
+        
+        public static let defaultShadow: Background = Background.shadow(.black, 0.5)
+        
+        public func change(color: UIColor? = nil, alpha: CGFloat? = nil) -> Background {
+            switch self {
+            case .none: return self
+            case .shadow(let c, let a): return .shadow(color ?? c, alpha ?? a)
+            }
+        }
+        
+        public var color: UIColor? {
+            switch self {
+            case .none: return nil
+            case .shadow(let color, _): return color
+            }
+        }
+        
+        public var alpha: CGFloat {
+            switch self {
+            case .none: return 0.0
+            case .shadow(_, let alpha): return alpha
+            }
+        }
     }
     
-    open var background: Background = .shadow(.black, 0.5)
+    public struct Defaults {
+        private init() {}
+        public static let dismissableHeightPercentage: CGFloat = 0.33
+    }
+    
+    open var background: Background = .defaultShadow
     public var dismissAction: (() -> Void)?
     public weak var delegateProxy: AnyObject?
-    public var dismissableHeightPercentage: CGFloat = 0.33 {
+    public var dismissableHeightPercentage: CGFloat = Defaults.dismissableHeightPercentage {
         didSet {
             dismissableHeightPercentage = min(max(0.0, dismissableHeightPercentage), 1.0)
         }
@@ -36,7 +64,7 @@ open class PullToDismiss: NSObject {
     
     private var panGesture: UIPanGestureRecognizer?
     private var shadowView: UIView?
-    
+    private var navigationBarHeight: CGFloat = 0.0
     convenience public init?(scrollView: UIScrollView) {
         guard let viewController = type(of: self).viewControllerFromScrollView(scrollView) else {
             print("a scrollView must be on the view controller.")
@@ -52,6 +80,7 @@ open class PullToDismiss: NSObject {
         if let navigationBar = navigationBar ?? viewController.navigationController?.navigationBar {
             let gesture = UIPanGestureRecognizer(target: self, action: #selector(handlePanGesture(_:)))
             navigationBar.addGestureRecognizer(gesture)
+            navigationBarHeight = navigationBar.frame.height
             self.panGesture = gesture
         }
     }
@@ -120,7 +149,12 @@ open class PullToDismiss: NSObject {
     }
     
     fileprivate func updateViewPosition(offset: CGFloat) {
-        viewPositionY += offset
+        var addOffset: CGFloat = offset
+        // avoid statusbar gone
+        if viewPositionY >= 0 && viewPositionY < 0.05 {
+            addOffset = min(max(-0.01, addOffset), 0.01)
+        }
+        viewPositionY += addOffset
         targetViewController?.view.frame.origin.y = max(0.0, viewPositionY)
         shadowView?.frame.origin.y = -(targetViewController?.view.frame.origin.y ?? 0.0)
         updateShadowView()
