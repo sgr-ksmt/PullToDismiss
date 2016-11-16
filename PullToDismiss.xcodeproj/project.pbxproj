@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4D5A35191DDB21DB00ED9D54 /* PullToDismiss.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D5A35181DDB21DB00ED9D54 /* PullToDismiss.swift */; };
+		4D5A351F1DDBF18B00ED9D54 /* PullToDismiss+Proxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D5A351E1DDBF18B00ED9D54 /* PullToDismiss+Proxy.swift */; };
 		4D870AAB1DDAA0CD00575A28 /* PullToDismiss.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D870AA11DDAA0CD00575A28 /* PullToDismiss.framework */; };
 		4D870AB01DDAA0CD00575A28 /* PullToDismissTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D870AAF1DDAA0CD00575A28 /* PullToDismissTests.swift */; };
 		4D870AB21DDAA0CD00575A28 /* PullToDismiss.h in Headers */ = {isa = PBXBuildFile; fileRef = 4D870AA41DDAA0CD00575A28 /* PullToDismiss.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -23,6 +25,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4D5A35181DDB21DB00ED9D54 /* PullToDismiss.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PullToDismiss.swift; sourceTree = "<group>"; };
+		4D5A351E1DDBF18B00ED9D54 /* PullToDismiss+Proxy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PullToDismiss+Proxy.swift"; sourceTree = "<group>"; };
 		4D870AA11DDAA0CD00575A28 /* PullToDismiss.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PullToDismiss.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4D870AA41DDAA0CD00575A28 /* PullToDismiss.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PullToDismiss.h; sourceTree = "<group>"; };
 		4D870AA51DDAA0CD00575A28 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -50,9 +54,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4D5A35171DDB21DB00ED9D54 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				4D5A35181DDB21DB00ED9D54 /* PullToDismiss.swift */,
+				4D5A351E1DDBF18B00ED9D54 /* PullToDismiss+Proxy.swift */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
 		4D870A971DDAA0CD00575A28 = {
 			isa = PBXGroup;
 			children = (
+				4D5A35171DDB21DB00ED9D54 /* Sources */,
 				4D870AA31DDAA0CD00575A28 /* PullToDismiss */,
 				4D870AAE1DDAA0CD00575A28 /* PullToDismissTests */,
 				4D870AA21DDAA0CD00575A28 /* Products */,
@@ -198,6 +212,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4D5A35191DDB21DB00ED9D54 /* PullToDismiss.swift in Sources */,
+				4D5A351F1DDBF18B00ED9D54 /* PullToDismiss+Proxy.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -360,6 +376,7 @@
 		4D870AB91DDAA0CD00575A28 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				DEVELOPMENT_TEAM = KW3G83N6K6;
 				INFOPLIST_FILE = PullToDismissTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -372,6 +389,7 @@
 		4D870ABA1DDAA0CD00575A28 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				DEVELOPMENT_TEAM = KW3G83N6K6;
 				INFOPLIST_FILE = PullToDismissTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -400,6 +418,7 @@
 				4D870AB71DDAA0CD00575A28 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		4D870AB81DDAA0CD00575A28 /* Build configuration list for PBXNativeTarget "PullToDismissTests" */ = {
 			isa = XCConfigurationList;
@@ -408,6 +427,7 @@
 				4D870ABA1DDAA0CD00575A28 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
