@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="16B2555" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="9dc-hW-Qq5">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Sample Custom View Controller-->
+        <scene sceneID="3cJ-QS-Mgi">
+            <objects>
+                <viewController id="9dc-hW-Qq5" customClass="SampleCustomViewController" customModule="Demo" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="j60-dN-QMz"/>
+                        <viewControllerLayoutGuide type="bottom" id="89V-l9-K9Q"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="0cy-od-abe">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7KB-kd-rbB">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="200"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Custom View (as NavigationBar)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UmD-gg-oAW">
+                                        <rect key="frame" x="65" y="90" width="246" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RZ7-oa-lAb">
+                                        <rect key="frame" x="328" y="28" width="39" height="30"/>
+                                        <state key="normal" title="Close">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="close:" destination="9dc-hW-Qq5" eventType="touchUpInside" id="hnQ-N4-wEV"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" red="0.2901960784" green="0.56470588239999997" blue="0.8862745098" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstItem="UmD-gg-oAW" firstAttribute="centerX" secondItem="7KB-kd-rbB" secondAttribute="centerX" id="Bt5-dz-0b3"/>
+                                    <constraint firstItem="UmD-gg-oAW" firstAttribute="centerY" secondItem="7KB-kd-rbB" secondAttribute="centerY" id="cAt-P3-ctV"/>
+                                    <constraint firstItem="RZ7-oa-lAb" firstAttribute="top" secondItem="7KB-kd-rbB" secondAttribute="top" constant="28" id="cII-Nx-ICb"/>
+                                    <constraint firstAttribute="trailing" secondItem="RZ7-oa-lAb" secondAttribute="trailing" constant="8" id="gXc-IW-Aqe"/>
+                                    <constraint firstAttribute="height" constant="200" id="ki6-al-hx6"/>
+                                </constraints>
+                            </view>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="YtH-v9-k4x">
+                                <rect key="frame" x="0.0" y="200" width="375" height="467"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="7KB-kd-rbB" firstAttribute="leading" secondItem="0cy-od-abe" secondAttribute="leading" id="3PG-eu-4OF"/>
+                            <constraint firstAttribute="trailing" secondItem="7KB-kd-rbB" secondAttribute="trailing" id="8Qy-dX-yfa"/>
+                            <constraint firstItem="YtH-v9-k4x" firstAttribute="leading" secondItem="0cy-od-abe" secondAttribute="leading" id="T58-lj-Eq5"/>
+                            <constraint firstItem="7KB-kd-rbB" firstAttribute="top" secondItem="0cy-od-abe" secondAttribute="top" id="aV6-qM-zpV"/>
+                            <constraint firstItem="YtH-v9-k4x" firstAttribute="top" secondItem="7KB-kd-rbB" secondAttribute="bottom" id="nrz-BD-75L"/>
+                            <constraint firstItem="89V-l9-K9Q" firstAttribute="top" secondItem="YtH-v9-k4x" secondAttribute="bottom" id="odz-Uz-KCj"/>
+                            <constraint firstAttribute="trailing" secondItem="YtH-v9-k4x" secondAttribute="trailing" id="ri7-fQ-EP3"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="coverView" destination="7KB-kd-rbB" id="c4z-ge-M4b"/>
+                        <outlet property="tableView" destination="YtH-v9-k4x" id="qQY-tn-cGj"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="UEC-ch-DVw" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="180" y="-6"/>
+        </scene>
+    </scenes>
+</document>
