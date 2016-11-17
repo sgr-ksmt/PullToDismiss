@@ -170,7 +170,7 @@ open class PullToDismiss: NSObject {
             if targetViewController?.view.frame.minY != 0.0 {
                 UIView.perform(.delete, on: [], options: [], animations: { [weak self] in
                     self?.targetViewController?.view.frame.origin.y = 0.0
-                    self?.shadowView?.alpha = 1.0
+                    self?.shadowView?.alpha = self?.background.alpha ?? 0.0
                 }) { [weak self] _ in
                     self?.deleteShadowView()
                 }
