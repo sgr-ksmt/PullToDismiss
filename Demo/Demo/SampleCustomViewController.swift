@@ -22,6 +22,7 @@ class SampleCustomViewController: UIViewController {
         super.viewDidLoad()
         tableView.register(UITableViewCell.classForCoder(), forCellReuseIdentifier: "Cell")
         pullToDismiss = PullToDismiss(scrollView: tableView, viewController: self, navigationBar: coverView)
+        Config.shared.adaptSetting(pullToDismiss: pullToDismiss)
         tableView.dataSource = self
         pullToDismiss?.delegateProxy = self
     }
