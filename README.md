@@ -10,7 +10,7 @@ Dismiss ViewController by pulling scroll view or navigation bar in Swift.
 - [Appetize.io Demo](https://appetize.io/app/hett44vca458r9artkbq0awxrc?device=iphone7&scale=75&orientation=portrait&osVersion=10.0)
 
 ## Feature
-- Easy to use.
+- Easy to use!
 - Support all scroll views. (UIScrollView, UITableView, UICollectionView)
 - Customizable. (dismiss background color, alpha, height percentage of dismiss)
 - Available in UIViewController, UINavigationController.
@@ -64,10 +64,12 @@ class SampleViewController: UIViewController {
 }
 
 extension SampleViewController: UITableViewDelegate {
+    // called by PullToDismiss
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         // ...
     }
 
+    // called by PullToDismiss
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // ...
     }
@@ -75,7 +77,8 @@ extension SampleViewController: UITableViewDelegate {
 ```
 
 #### Advanced
-PullToDismiss defines major UIScrollView|UITableView|UICollectionViewDelegate methods. but some delegate method aren't defined.  
+PullToDismiss defines major `UIScrollView|UITableView|UICollectionViewDelegate` methods.  
+But some delegate method aren't defined.  
 If you want to use other methods, override PullToDismiss and define delegate method you want to.
 
 ```swift
