@@ -109,7 +109,7 @@ open class PullToDismiss: NSObject {
     // MARK: - shadow view
     
     private func makeBackgroundView() {
-        
+        deleteBackgroundView()
         switch background {
         case .shadow(let color, let alpha):
             let shadowView = UIView(frame: .zero)
@@ -122,12 +122,9 @@ open class PullToDismiss: NSObject {
             self.shadowView = shadowView
         case .blur(let blurRadius, let colorTint, let colorTintAlpha):
             let blurView = CustomBlurView(radius: blurRadius)
-            blurView.colorTint = colorTint
-            blurView.colorTintAlpha = colorTintAlpha
-            targetViewController?.view.addSubview(blurView)
+            targetViewController?.presentingViewController?.view.addSubview(blurView)
             targetViewController?.view.clipsToBounds = false
             blurView.frame = targetViewController?.view.bounds ?? .zero
-            blurView.superview?.sendSubview(toBack: blurView)
             self.blurView = blurView
         default:
             ()
@@ -154,6 +151,7 @@ open class PullToDismiss: NSObject {
         self.shadowView = nil
         self.blurView?.removeFromSuperview()
         self.blurView = nil
+        targetViewController?.view.clipsToBounds = true
     }
     
     private func resetBackgroundView() {

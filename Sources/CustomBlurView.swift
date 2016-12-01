@@ -57,7 +57,11 @@ class CustomBlurView: UIVisualEffectView {
     
     private func _setValue<T>(value: T?, forKey key: PrivateKey) {
         blurEffect.setValue(value, forKey: key.rawValue)
-        self.effect = blurEffect
+        if blurRadius > 0 {
+            self.effect = blurEffect
+        } else {
+            self.effect = nil
+        }
     }
     
     private func _value<T>(forKey key: PrivateKey) -> T {
