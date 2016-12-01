@@ -23,6 +23,9 @@ open class PullToDismiss: NSObject {
         
         public static let defaultShadow: Background = Background.shadow(.black, 0.5)
         public static let defaultBlur: Background = Background.blur(20.0, .clear, 0.0)
+        public static let lightBlur: Background = Background.blur(30.0, UIColor(white: 1.0, alpha: 0.3), 1.0)
+        public static let extraLightBlur: Background = Background.blur(20.0, UIColor(white: 0.97, alpha: 0.82), 1.0)
+        public static let darkBlur: Background = Background.blur(20.0, UIColor(white: 0.11, alpha: 0.73), 1.0)
         
         public func change(color: UIColor? = nil, alpha: CGFloat? = nil, blur: CGFloat? = nil) -> Background {
             switch self {
@@ -72,6 +75,7 @@ open class PullToDismiss: NSObject {
     private var shadowView: UIView?
     private var blurView: CustomBlurView?
     private var navigationBarHeight: CGFloat = 0.0
+    private var blurSaturationDeltaFactor: CGFloat = 1.8
     convenience public init?(scrollView: UIScrollView) {
         guard let viewController = type(of: self).viewControllerFromScrollView(scrollView) else {
             print("a scrollView must be on the view controller.")
@@ -122,6 +126,9 @@ open class PullToDismiss: NSObject {
             self.shadowView = shadowView
         case .blur(let blurRadius, let colorTint, let colorTintAlpha):
             let blurView = CustomBlurView(radius: blurRadius)
+            blurView.colorTint = colorTint
+            blurView.colorTintAlpha = colorTintAlpha
+            blurView.saturationDeltaFactor = blurSaturationDeltaFactor
             targetViewController?.presentingViewController?.view.addSubview(blurView)
             targetViewController?.view.clipsToBounds = false
             blurView.frame = targetViewController?.view.bounds ?? .zero
@@ -136,11 +143,15 @@ open class PullToDismiss: NSObject {
         case .shadow(_, let alpha):
             let targetViewOriginY: CGFloat = targetViewController?.view.frame.origin.y ?? 0.0
             let targetViewHeight: CGFloat = targetViewController?.view.frame.height ?? 0.0
-            self.shadowView?.alpha = (1.0 - (targetViewOriginY / (targetViewHeight * dismissableHeightPercentage))) * alpha
-        case .blur(let blurRadius, _, _):
+            let rate: CGFloat = (1.0 - (targetViewOriginY / (targetViewHeight * dismissableHeightPercentage)))
+            self.shadowView?.alpha = rate * alpha
+        case .blur(let blurRadius, _, let colorTintAlpha):
             let targetViewOriginY: CGFloat = targetViewController?.view.frame.origin.y ?? 0.0
             let targetViewHeight: CGFloat = targetViewController?.view.frame.height ?? 0.0
-            self.blurView?.blurRadius = (1.0 - (targetViewOriginY / (targetViewHeight * dismissableHeightPercentage))) * blurRadius
+            let rate: CGFloat = (1.0 - (targetViewOriginY / (targetViewHeight * dismissableHeightPercentage)))
+            self.blurView?.blurRadius = rate * blurRadius
+            self.blurView?.colorTintAlpha = rate * colorTintAlpha
+            self.blurView?.saturationDeltaFactor = rate * (blurSaturationDeltaFactor - 1.0) + 1.0
         default:
             ()
         }
@@ -158,8 +169,10 @@ open class PullToDismiss: NSObject {
         switch background {
         case .shadow(_, let alpha):
             self.shadowView?.alpha = alpha
-        case .blur(let blurRadius, _, _):
+        case .blur(let blurRadius, _, let colorTintAlpha):
             self.blurView?.blurRadius = blurRadius
+            self.blurView?.colorTintAlpha = colorTintAlpha
+            self.blurView?.saturationDeltaFactor = blurSaturationDeltaFactor
         default:
             ()
         }

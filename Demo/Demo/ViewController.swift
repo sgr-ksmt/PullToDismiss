@@ -130,8 +130,8 @@ class ViewController: UIViewController, UITextFieldDelegate {
                     }
                 }
                 let nav = UINavigationController(rootViewController: vc)
-                Config.shared.background = .defaultBlur
-                Config.shared.dismissableHeightPercentage = 0.5
+                Config.shared.background = .lightBlur
+                Config.shared.dismissableHeightPercentage = 0.6
                 UIView.animate(withDuration: 0.2, animations: { [weak self] in
                     self?.blurSampleImageView.alpha = 1.0
                 })

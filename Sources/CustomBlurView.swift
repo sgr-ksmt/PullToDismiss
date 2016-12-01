@@ -15,6 +15,7 @@ class CustomBlurView: UIVisualEffectView {
         case blurRadius = "blurRadius"
         case colorTint = "colorTint"
         case colorTintAlpha = "colorTintAlpha"
+        case saturationDeltaFactor = "saturationDeltaFactor"
     }
     
     private let blurEffect: UIBlurEffect = (NSClassFromString("_UICustomBlurEffect") as! UIBlurEffect.Type).init()
@@ -43,6 +44,15 @@ class CustomBlurView: UIVisualEffectView {
         }
         set {
             _setValue(value: newValue, forKey: .colorTintAlpha)
+        }
+    }
+
+    var saturationDeltaFactor: CGFloat {
+        get {
+            return _value(forKey: .saturationDeltaFactor)
+        }
+        set {
+            _setValue(value: newValue, forKey: .saturationDeltaFactor)
         }
     }
 
