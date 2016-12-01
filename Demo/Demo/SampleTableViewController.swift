@@ -27,8 +27,13 @@ class SampleTableViewController: UITableViewController {
         navigationController?.navigationBar.setValue(UIBarPosition.topAttached.rawValue, forKey: "barPosition")
         pullToDismiss = PullToDismiss(scrollView: tableView)
         Config.shared.adaptSetting(pullToDismiss: pullToDismiss)
+        pullToDismiss?.dismissAction = { [weak self] in
+            self?.dismiss(nil)
+        }
         pullToDismiss?.delegateProxy = self
     }
+    
+    var disissBlock: (() -> Void)?
 
     // MARK: - Table view data source
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -42,7 +47,9 @@ class SampleTableViewController: UITableViewController {
     }
     
     @objc func dismiss(_: AnyObject?) {
-        dismiss(animated: true, completion: nil)
+        dismiss(animated: true) { [weak self] in
+            self?.disissBlock?()
+        }
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
