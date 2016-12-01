@@ -12,6 +12,7 @@
 		4D870AAB1DDAA0CD00575A28 /* PullToDismiss.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D870AA11DDAA0CD00575A28 /* PullToDismiss.framework */; };
 		4D870AB01DDAA0CD00575A28 /* PullToDismissTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D870AAF1DDAA0CD00575A28 /* PullToDismissTests.swift */; };
 		4D870AB21DDAA0CD00575A28 /* PullToDismiss.h in Headers */ = {isa = PBXBuildFile; fileRef = 4D870AA41DDAA0CD00575A28 /* PullToDismiss.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4D9D97C51DF058C700C10C87 /* CustomBlurView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D9D97C41DF058C700C10C87 /* CustomBlurView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -33,6 +34,7 @@
 		4D870AAA1DDAA0CD00575A28 /* PullToDismissTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PullToDismissTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4D870AAF1DDAA0CD00575A28 /* PullToDismissTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PullToDismissTests.swift; sourceTree = "<group>"; };
 		4D870AB11DDAA0CD00575A28 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4D9D97C41DF058C700C10C87 /* CustomBlurView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomBlurView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,6 +61,7 @@
 			children = (
 				4D5A35181DDB21DB00ED9D54 /* PullToDismiss.swift */,
 				4D5A351E1DDBF18B00ED9D54 /* PullToDismiss+Proxy.swift */,
+				4D9D97C41DF058C700C10C87 /* CustomBlurView.swift */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -214,6 +217,7 @@
 			files = (
 				4D5A35191DDB21DB00ED9D54 /* PullToDismiss.swift in Sources */,
 				4D5A351F1DDBF18B00ED9D54 /* PullToDismiss+Proxy.swift in Sources */,
+				4D9D97C51DF058C700C10C87 /* CustomBlurView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

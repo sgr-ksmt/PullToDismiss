@@ -15,16 +15,20 @@ open class PullToDismiss: NSObject {
     ///
     /// - none: no shadow view
     /// - shadow(color, alpha): have shadow view (view color, view initial alpha)
+    /// - blur(blurRadius, color, alpha): have blur view (blur radius, blur color, blur color alpha)
     public enum Background {
         case none
         case shadow(UIColor, CGFloat) // color(RGB), alpha
+        case blur(CGFloat, UIColor, CGFloat) // blurRadius, blur color(RGB), blur alpha
         
         public static let defaultShadow: Background = Background.shadow(.black, 0.5)
+        public static let defaultBlur: Background = Background.blur(20.0, .clear, 0.0)
         
-        public func change(color: UIColor? = nil, alpha: CGFloat? = nil) -> Background {
+        public func change(color: UIColor? = nil, alpha: CGFloat? = nil, blur: CGFloat? = nil) -> Background {
             switch self {
             case .none: return self
             case .shadow(let c, let a): return .shadow(color ?? c, alpha ?? a)
+            case .blur(let b, let c, let a): return .blur(blur ?? b, color ?? c, alpha ?? a)
             }
         }
         
@@ -32,6 +36,7 @@ open class PullToDismiss: NSObject {
             switch self {
             case .none: return nil
             case .shadow(let color, _): return color
+            case .blur(_, let color, _): return color
             }
         }
         
@@ -39,6 +44,7 @@ open class PullToDismiss: NSObject {
             switch self {
             case .none: return 0.0
             case .shadow(_, let alpha): return alpha
+            case .blur(_, _, let alpha): return alpha
             }
         }
     }
@@ -64,6 +70,7 @@ open class PullToDismiss: NSObject {
     
     private var panGesture: UIPanGestureRecognizer?
     private var shadowView: UIView?
+    private var blurView: CustomBlurView?
     private var navigationBarHeight: CGFloat = 0.0
     convenience public init?(scrollView: UIScrollView) {
         guard let viewController = type(of: self).viewControllerFromScrollView(scrollView) else {
@@ -101,31 +108,63 @@ open class PullToDismiss: NSObject {
     
     // MARK: - shadow view
     
-    private func makeShadowView() {
-        guard case .shadow(let color, _) = background else {
-            return
+    private func makeBackgroundView() {
+        
+        switch background {
+        case .shadow(let color, let alpha):
+            let shadowView = UIView(frame: .zero)
+            shadowView.backgroundColor = color
+            shadowView.alpha = alpha
+            targetViewController?.view.addSubview(shadowView)
+            targetViewController?.view.clipsToBounds = false
+            shadowView.frame = targetViewController?.view.bounds ?? .zero
+            shadowView.superview?.sendSubview(toBack: shadowView)
+            self.shadowView = shadowView
+        case .blur(let blurRadius, let colorTint, let colorTintAlpha):
+            let blurView = CustomBlurView(radius: blurRadius)
+            blurView.colorTint = colorTint
+            blurView.colorTintAlpha = colorTintAlpha
+            targetViewController?.view.addSubview(blurView)
+            targetViewController?.view.clipsToBounds = false
+            blurView.frame = targetViewController?.view.bounds ?? .zero
+            blurView.superview?.sendSubview(toBack: blurView)
+            self.blurView = blurView
+        default:
+            ()
         }
-        let shadowView = UIView(frame: .zero)
-        shadowView.backgroundColor = color
-        targetViewController?.view.addSubview(shadowView)
-        targetViewController?.view.clipsToBounds = false
-        shadowView.frame = targetViewController?.view.bounds ?? .zero
-        shadowView.superview?.sendSubview(toBack: shadowView)
-        self.shadowView = shadowView
     }
     
-    private func updateShadowView() {
-        guard case .shadow(_, let alphaRate) = background else {
-            return
+    private func updateBackgroundView() {
+        switch background {
+        case .shadow(_, let alpha):
+            let targetViewOriginY: CGFloat = targetViewController?.view.frame.origin.y ?? 0.0
+            let targetViewHeight: CGFloat = targetViewController?.view.frame.height ?? 0.0
+            self.shadowView?.alpha = (1.0 - (targetViewOriginY / (targetViewHeight * dismissableHeightPercentage))) * alpha
+        case .blur(let blurRadius, _, _):
+            let targetViewOriginY: CGFloat = targetViewController?.view.frame.origin.y ?? 0.0
+            let targetViewHeight: CGFloat = targetViewController?.view.frame.height ?? 0.0
+            self.blurView?.blurRadius = (1.0 - (targetViewOriginY / (targetViewHeight * dismissableHeightPercentage))) * blurRadius
+        default:
+            ()
         }
-        let targetViewOriginY: CGFloat = targetViewController?.view.frame.origin.y ?? 0.0
-        let targetViewHeight: CGFloat = targetViewController?.view.frame.height ?? 0.0
-        self.shadowView?.alpha = (1.0 - (targetViewOriginY / (targetViewHeight * dismissableHeightPercentage))) * alphaRate
     }
     
-    private func deleteShadowView() {
+    private func deleteBackgroundView() {
         self.shadowView?.removeFromSuperview()
         self.shadowView = nil
+        self.blurView?.removeFromSuperview()
+        self.blurView = nil
+    }
+    
+    private func resetBackgroundView() {
+        switch background {
+        case .shadow(_, let alpha):
+            self.shadowView?.alpha = alpha
+        case .blur(let blurRadius, _, _):
+            self.blurView?.blurRadius = blurRadius
+        default:
+            ()
+        }
     }
     
     @objc private func handlePanGesture(_ gesture: UIPanGestureRecognizer) {
@@ -145,7 +184,7 @@ open class PullToDismiss: NSObject {
     
     fileprivate func startDragging() {
         viewPositionY = 0.0
-        makeShadowView()
+        makeBackgroundView()
     }
     
     fileprivate func updateViewPosition(offset: CGFloat) {
@@ -157,22 +196,22 @@ open class PullToDismiss: NSObject {
         viewPositionY += addOffset
         targetViewController?.view.frame.origin.y = max(0.0, viewPositionY)
         shadowView?.frame.origin.y = -(targetViewController?.view.frame.origin.y ?? 0.0)
-        updateShadowView()
+        updateBackgroundView()
     }
     
     fileprivate func finishDragging() {
         let originY = targetViewController?.view.frame.origin.y ?? 0.0
         let dismissableHeight = (targetViewController?.view.frame.height ?? 0.0) * dismissableHeightPercentage
         if originY > dismissableHeight {
-            deleteShadowView()
+            deleteBackgroundView()
             _ = dismissAction?() ?? dismiss()
         } else if originY != 0.0 {
             if targetViewController?.view.frame.minY != 0.0 {
                 UIView.perform(.delete, on: [], options: [], animations: { [weak self] in
                     self?.targetViewController?.view.frame.origin.y = 0.0
-                    self?.shadowView?.alpha = self?.background.alpha ?? 0.0
+                    self?.resetBackgroundView()
                 }) { [weak self] _ in
-                    self?.deleteShadowView()
+                    self?.deleteBackgroundView()
                 }
             }
         }

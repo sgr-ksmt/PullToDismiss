@@ -37,7 +37,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
         alphaSlider.addTarget(self, action: #selector(alphaDidChange(_:)), for: .valueChanged)
         dismissableHeightPercentageSlider.addTarget(self, action: #selector(dismissableHeightDidChange(_:)), for: .valueChanged)
         colorTextField.delegate = self
-        NotificationCenter.default.addObserver(self, selector: #selector(textDidChange(_:)), name: .UITextFieldTextDidChange, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(textDidChange(_:)), name: .UITextFieldTextDidChange, object: nil)        
     }
     
     private func update(animated: Bool = false) {
