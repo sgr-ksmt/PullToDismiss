@@ -108,7 +108,7 @@ open class PullToDismiss: NSObject {
     
     // MARK: - shadow view
     
-    private func makeBackgroundView() {
+    private func makeBackgroundViewIfNeeded() {
         deleteBackgroundView()
         switch background {
         case .shadow(let color, let alpha):
@@ -182,7 +182,10 @@ open class PullToDismiss: NSObject {
     
     fileprivate func startDragging() {
         viewPositionY = 0.0
-        makeBackgroundView()
+        makeBackgroundViewIfNeeded()
+        targetViewController?.view.layer.removeAllAnimations()
+        shadowView?.layer.removeAllAnimations()
+        blurView?.layer.removeAllAnimations()
     }
     
     fileprivate func updateViewPosition(offset: CGFloat) {
@@ -204,14 +207,16 @@ open class PullToDismiss: NSObject {
             deleteBackgroundView()
             _ = dismissAction?() ?? dismiss()
         } else if originY != 0.0 {
-            if targetViewController?.view.frame.minY != 0.0 {
-                UIView.perform(.delete, on: [], options: [], animations: { [weak self] in
+                UIView.perform(.delete, on: [], options: [.allowUserInteraction], animations: { [weak self] in
                     self?.targetViewController?.view.frame.origin.y = 0.0
                     self?.resetBackgroundView()
-                }) { [weak self] _ in
-                    self?.deleteBackgroundView()
+                }) { [weak self] finished in
+                    if finished {
+                        self?.deleteBackgroundView()
+                    }
                 }
-            }
+        } else {
+            self.deleteBackgroundView()
         }
         viewPositionY = 0.0
     }
