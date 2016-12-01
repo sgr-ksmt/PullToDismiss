@@ -58,7 +58,29 @@ class CustomBlurView: UIVisualEffectView {
 
     public init(radius: CGFloat = 0.0) {
         super.init(effect: self.blurEffect)
-        self.blurEffect.setValue(1.0, forKeyPath: "scale")
+    }
+    
+    public init(style: UIBlurEffectStyle) {
+        super.init(effect: self.blurEffect)
+        switch style {
+        case .light:
+            blurRadius = 30.0
+            colorTint = UIColor(white: 1.0, alpha: 0.3)
+            colorTintAlpha = 1.0
+            saturationDeltaFactor = 1.8
+        case .extraLight:
+            blurRadius = 20.0
+            colorTint = UIColor(white: 0.97, alpha: 0.82)
+            colorTintAlpha = 1.0
+            saturationDeltaFactor = 1.8
+        case .dark:
+            blurRadius = 20.0
+            colorTint = UIColor(white: 0.11, alpha: 0.73)
+            colorTintAlpha = 1.0
+            saturationDeltaFactor = 1.8
+        default:
+            () // todo regular, prominent
+        }
     }
     
     required public init?(coder aDecoder: NSCoder) {
