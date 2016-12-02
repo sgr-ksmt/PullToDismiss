@@ -14,6 +14,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet private weak var demoButton1: UIButton!
     @IBOutlet private weak var demoButton2: UIButton!
     @IBOutlet private weak var demoButton3: UIButton!
+    @IBOutlet private weak var demoButton4: UIButton!
     @IBOutlet private weak var backgroundSwitch: UISegmentedControl!
     @IBOutlet private weak var colorTextField: UITextField!
     @IBOutlet private weak var currentColorView: UIView!
@@ -22,10 +23,11 @@ class ViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet private weak var dismissableHeightPercentageSlider: UISlider!
     @IBOutlet private weak var dismissableHeightPercentageLabel: UILabel!
     @IBOutlet private weak var disableView: UIView!
+    @IBOutlet private weak var blurSampleImageView: UIImageView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let buttons: [UIButton] = [demoButton1, demoButton2, demoButton3]
+        let buttons: [UIButton] = [demoButton1, demoButton2, demoButton3, demoButton4]
         buttons.forEach {
             $0.layer.cornerRadius = $0.frame.height / 2
             $0.clipsToBounds = true
@@ -37,9 +39,9 @@ class ViewController: UIViewController, UITextFieldDelegate {
         alphaSlider.addTarget(self, action: #selector(alphaDidChange(_:)), for: .valueChanged)
         dismissableHeightPercentageSlider.addTarget(self, action: #selector(dismissableHeightDidChange(_:)), for: .valueChanged)
         colorTextField.delegate = self
-        NotificationCenter.default.addObserver(self, selector: #selector(textDidChange(_:)), name: .UITextFieldTextDidChange, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(textDidChange(_:)), name: .UITextFieldTextDidChange, object: nil)        
     }
-    
+        
     private func update(animated: Bool = false) {
         let animations: () -> Void = { [weak self] in
             self?.backgroundSwitch.selectedSegmentIndex = self?.selectedSegmentIndex(from: Config.shared.background) ?? 0
@@ -114,6 +116,24 @@ class ViewController: UIViewController, UITextFieldDelegate {
             case demoButton3:
                 let storyboard = UIStoryboard(name: "SampleCustomViewController", bundle: nil)
                 return storyboard.instantiateInitialViewController()!
+            case demoButton4:
+                let vc = SampleTableViewController()
+                vc.disissBlock = { [weak self] in
+                    UIView.animate(withDuration: 0.2, animations: { [weak self] in
+                        self?.blurSampleImageView.alpha = 0
+                    }) { [weak self] _ in
+                        Config.shared.background = .defaultShadow
+                        Config.shared.dismissableHeightPercentage = 0.35
+                        self?.update()
+                    }
+                }
+                let nav = UINavigationController(rootViewController: vc)
+                Config.shared.background = .lightBlur
+                Config.shared.dismissableHeightPercentage = 0.6
+                UIView.animate(withDuration: 0.2, animations: { [weak self] in
+                    self?.blurSampleImageView.alpha = 1.0
+                })
+                return nav
             default:
                 fatalError()
             }
