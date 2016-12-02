@@ -1,11 +1,15 @@
 # PullToDismiss
 Dismiss ViewController by pulling scroll view or navigation bar in Swift.
 
+[![GitHub release](https://img.shields.io/github/release/sgr-ksmt/PullToDismiss.svg)](https://github.com/sgr-ksmt/PullToDismiss/releases)
 ![Language](https://img.shields.io/badge/language-Swift%203-orange.svg)
 [![Carthage Compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![CocoaPods  Compatible](https://img.shields.io/badge/Cocoa%20Pods-compatible-4BC51D.svg?style=flat)](https://cocoapods.org)
 
-![gif](Documents/sample.gif)
+|            sample            |            blur sample            |
+|:----------------------------:|:---------------------------------:|
+| ![gif](Documents/sample.gif) | ![gif](Documents/blur_sample.gif) |
+
 
 - [Appetize.io Demo](https://appetize.io/app/hett44vca458r9artkbq0awxrc?device=iphone7&scale=75&orientation=portrait&osVersion=10.0)
 
@@ -13,6 +17,7 @@ Dismiss ViewController by pulling scroll view or navigation bar in Swift.
 - Easy to use!
 - Support all scroll views. (UIScrollView, UITableView, UICollectionView)
 - Customizable. (dismiss background color, alpha, height percentage of dismiss)
+- Blur support!
 - Available in UIViewController, UINavigationController.
 - Automatically add pan gesture to navigation bar.
 
@@ -122,12 +127,26 @@ You can customize:
 pullToDismiss?.background = .shadow(.red, 0.5) // color: red, alpha: 0.5
 ```
 
+#### Blurred background
+New feature for v1.0
+
+![gif](Documents/blur_sample.gif)
+
+```swift
+// preset blur (.extraLightBlur, .lightBlur, .darkBlur)
+pullToDismiss?.background = .extraLightBlur
+
+// set blurRadius, blurColor, blurColorAlpha
+pullToDismiss?.background = Background.blur(20.0, .clear, 0.0)
+```
+
 - dismissableHeightPercentage (default: 0.33)
 
 ```swift
 // to pull half size of view controller, dismiss view controller.
 pullToDismiss?.dismissableHeightPercentage = 0.5
 ```
+
 
 ## Requirements
 - iOS 8.0+
@@ -140,7 +159,7 @@ pullToDismiss?.dismissableHeightPercentage = 0.5
 - Add the following to your *Cartfile*:
 
 ```bash
-github 'sgr-ksmt/PullToDismiss'
+github 'sgr-ksmt/PullToDismiss' ~> 1.0
 ```
 
 - Run `carthage update`
@@ -154,7 +173,7 @@ github 'sgr-ksmt/PullToDismiss'
 it, simply add the following line to your Podfile:
 
 ```ruby
-pod 'PullToDismiss'
+pod 'PullToDismiss' ~> 1.0
 ```
 
 and run `pod install`
