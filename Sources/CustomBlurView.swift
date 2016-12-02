@@ -23,37 +23,37 @@ class CustomBlurView: UIVisualEffectView {
     
     var blurRadius: CGFloat {
         get {
-            return _value(forKey: .blurRadius)
+            return value(forKey: .blurRadius)
         }
         set {
-            _setValue(value: newValue, forKey: .blurRadius)
+            setValue(value: newValue, forKey: .blurRadius)
         }
     }
     
     var colorTint: UIColor? {
         get {
-            return _valueOptional(forKey: .colorTint)
+            return valueOptional(forKey: .colorTint)
         }
         set {
-            _setValue(value: newValue, forKey: .colorTint)
+            setValue(value: newValue, forKey: .colorTint)
         }
     }
 
     var colorTintAlpha: CGFloat {
         get {
-            return _value(forKey: .colorTintAlpha)
+            return value(forKey: .colorTintAlpha)
         }
         set {
-            _setValue(value: newValue, forKey: .colorTintAlpha)
+            setValue(value: newValue, forKey: .colorTintAlpha)
         }
     }
 
     var saturationDeltaFactor: CGFloat {
         get {
-            return _value(forKey: .saturationDeltaFactor)
+            return value(forKey: .saturationDeltaFactor)
         }
         set {
-            _setValue(value: newValue, forKey: .saturationDeltaFactor)
+            setValue(value: newValue, forKey: .saturationDeltaFactor)
         }
     }
 
@@ -88,7 +88,7 @@ class CustomBlurView: UIVisualEffectView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func _setValue<T>(value: T?, forKey key: PrivateKey) {
+    private func setValue<T>(value: T?, forKey key: PrivateKey) {
         blurEffect.setValue(value, forKey: key.rawValue)
         if blurRadius > 0 {
             self.effect = blurEffect
@@ -97,11 +97,11 @@ class CustomBlurView: UIVisualEffectView {
         }
     }
     
-    private func _value<T>(forKey key: PrivateKey) -> T {
+    private func value<T>(forKey key: PrivateKey) -> T {
         return blurEffect.value(forKey: key.rawValue) as! T
     }
 
-    private func _valueOptional<T>(forKey key: PrivateKey) -> T? {
+    private func valueOptional<T>(forKey key: PrivateKey) -> T? {
         return blurEffect.value(forKey: key.rawValue) as? T
     }
 }
