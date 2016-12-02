@@ -110,8 +110,6 @@ class ViewController: UIViewController, UITextFieldDelegate {
             case demoButton1:
                 let vc = SampleTableViewController()
                 let nav = UINavigationController(rootViewController: vc)
-                Config.shared.background = .defaultBlur
-                Config.shared.dismissableHeightPercentage = 0.35
                 return nav
             case demoButton2:
                 return SampleCollectionViewController(collectionViewLayout: SampleCollectionLayout())
