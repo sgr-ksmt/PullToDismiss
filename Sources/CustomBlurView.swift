@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 
+@available(iOS 9.0, *)
 class CustomBlurView: UIVisualEffectView {
     
     private enum PrivateKey: String {

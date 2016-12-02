@@ -34,6 +34,11 @@ class ViewController: UIViewController, UITextFieldDelegate {
             $0.addTarget(self, action: #selector(demoButtonDidTap(_:)), for: .touchUpInside)
         }
         
+        if #available(iOS 9.0, *) {
+        } else {
+            demoButton4.isEnabled = false
+        }
+
         update()
         backgroundSwitch.addTarget(self, action: #selector(switchDidChange(segmentedControl:)), for: .valueChanged)
         alphaSlider.addTarget(self, action: #selector(alphaDidChange(_:)), for: .valueChanged)
@@ -128,7 +133,11 @@ class ViewController: UIViewController, UITextFieldDelegate {
                     }
                 }
                 let nav = UINavigationController(rootViewController: vc)
-                Config.shared.background = .lightBlur
+                if #available(iOS 9.0, *) {
+                    Config.shared.background = .lightBlur
+                } else {
+                    // Fallback on earlier versions
+                }
                 Config.shared.dismissableHeightPercentage = 0.6
                 UIView.animate(withDuration: 0.2, animations: { [weak self] in
                     self?.blurSampleImageView.alpha = 1.0
