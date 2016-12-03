@@ -17,7 +17,6 @@ public protocol BackgroundEffect {
     func applyEffect(view: UIView?, rate: CGFloat)
 }
 
-
 /// A target type to add background view
 ///
 /// - targetViewController: add background view to target viewcontroller
@@ -32,7 +31,7 @@ public struct ShadowEffect: BackgroundEffect {
     public var alpha: CGFloat
     public var target: BackgroundTarget = .targetViewController
 
-    public static var `default`: ShadowEffect = ShadowEffect(color: .black, alpha: 0.5)
+    public static var `default`: ShadowEffect = ShadowEffect(color: .black, alpha: 0.8)
     
     init(color: UIColor?, alpha: CGFloat) {
         self.color = color
@@ -110,6 +109,6 @@ public struct BlurEffect: BackgroundEffect {
         }
         view.blurRadius = blurRadius * rate
         view.colorTintAlpha = alpha * rate
-        view.saturationDeltaFactor = saturationDeltaFactor * rate
+        view.saturationDeltaFactor = (saturationDeltaFactor - 1.0) * rate + 1.0
     }
 }
