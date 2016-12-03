@@ -1,5 +1,5 @@
 # PullToDismiss
-Dismiss ViewController by pulling scroll view or navigation bar in Swift.
+You can dismiss modal viewcontroller by pulling scrollview or navigationbar in Swift.
 
 [![GitHub release](https://img.shields.io/github/release/sgr-ksmt/PullToDismiss.svg)](https://github.com/sgr-ksmt/PullToDismiss/releases)
 ![Language](https://img.shields.io/badge/language-Swift%203-orange.svg)
