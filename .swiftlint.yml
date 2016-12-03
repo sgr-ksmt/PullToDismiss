@@ -14,7 +14,8 @@ disabled_rules:
 - opening_brace
 - line_length
 - force_try
-
+- vertical_whitespace
+  
 force_try: warning
 
 line_length: 150

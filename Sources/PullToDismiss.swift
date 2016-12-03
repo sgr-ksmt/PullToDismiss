@@ -189,19 +189,19 @@ open class PullToDismiss: NSObject {
     
     // MARK: - delegates
     
-    public var scrollViewDelegate: UIScrollViewDelegate? {
+    public weak var scrollViewDelegate: UIScrollViewDelegate? {
         return delegateProxy as? UIScrollViewDelegate
     }
     
-    public var tableViewDelegate: UITableViewDelegate? {
+    public weak var tableViewDelegate: UITableViewDelegate? {
         return delegateProxy as? UITableViewDelegate
     }
     
-    public var collectionViewDelegate: UICollectionViewDelegate? {
+    public weak var collectionViewDelegate: UICollectionViewDelegate? {
         return delegateProxy as? UICollectionViewDelegate
     }
     
-    public var collectionViewDelegateFlowLayout: UICollectionViewDelegateFlowLayout? {
+    public weak var collectionViewDelegateFlowLayout: UICollectionViewDelegateFlowLayout? {
         return delegateProxy as? UICollectionViewDelegateFlowLayout
     }
 }
