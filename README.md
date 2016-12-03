@@ -1,11 +1,15 @@
 # PullToDismiss
 Dismiss ViewController by pulling scroll view or navigation bar in Swift.
 
+[![GitHub release](https://img.shields.io/github/release/sgr-ksmt/PullToDismiss.svg)](https://github.com/sgr-ksmt/PullToDismiss/releases)
 ![Language](https://img.shields.io/badge/language-Swift%203-orange.svg)
 [![Carthage Compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![CocoaPods  Compatible](https://img.shields.io/badge/Cocoa%20Pods-compatible-4BC51D.svg?style=flat)](https://cocoapods.org)
 
-![gif](Documents/sample.gif)
+|            sample            |            blur sample            |
+|:----------------------------:|:---------------------------------:|
+| ![gif](Documents/sample.gif) | ![gif](Documents/blur_sample.gif) |
+
 
 - [Appetize.io Demo](https://appetize.io/app/hett44vca458r9artkbq0awxrc?device=iphone7&scale=75&orientation=portrait&osVersion=10.0)
 
@@ -15,6 +19,7 @@ Dismiss ViewController by pulling scroll view or navigation bar in Swift.
 - Customizable. (dismiss background color, alpha, height percentage of dismiss)
 - Available in UIViewController, UINavigationController.
 - Automatically add pan gesture to navigation bar.
+- Blur effect support.
 
 ## Usage
 ### Getting Started
@@ -112,26 +117,46 @@ extension SampleViewController: UITableViewDelegate {
 ```
 
 ### Customize
-You can customize:
+You can customize backgroundEffect, dismissableHeightPercentage:
 
-- background (default: `.shadow(.black, 0.5)`)
+#### Shadow background effet
+
+- background (default: `ShadowEffect.default`, [color: black, alpha: 0.8])
 
 ![img1](Documents/img1.png)
 
 ```swift
-pullToDismiss?.background = .shadow(.red, 0.5) // color: red, alpha: 0.5
+pullToDismiss?.background = ShadowEffect(color: .red, alpha: 0.5) // color: red, alpha: 0.5
 ```
 
-- dismissableHeightPercentage (default: 0.33)
+#### Blur background effect
+New feature for v1.0.
+
+![gif](Documents/blur_sample.gif)
+
+```swift
+// preset blur (.extraLight, .light, .dark)
+pullToDismiss?.background = BlurEffect.extraLight
+
+// set custom Blur
+pullToDismiss?.background = BlurEffect(color: .red, alpha: 0.5, blurRadius: 40.0, saturationDeltaFactor: 1.8)
+```
+
+#### dismissableHeightPercentage
+
+![img2](Documents/img2.png)
+
 
 ```swift
 // to pull half size of view controller, dismiss view controller.
 pullToDismiss?.dismissableHeightPercentage = 0.5
 ```
 
+
 ## Requirements
-- iOS 8.0+
-- Xcode 8.0+(Swift 3+)
+- iOS 8.0+ (blur effect: iOS 9.0+)
+- Xcode 8.1+
+- Swift 3.0+
 
 ## Installation
 
@@ -140,7 +165,7 @@ pullToDismiss?.dismissableHeightPercentage = 0.5
 - Add the following to your *Cartfile*:
 
 ```bash
-github 'sgr-ksmt/PullToDismiss'
+github 'sgr-ksmt/PullToDismiss' ~> 1.0
 ```
 
 - Run `carthage update`
@@ -154,11 +179,13 @@ github 'sgr-ksmt/PullToDismiss'
 it, simply add the following line to your Podfile:
 
 ```ruby
-pod 'PullToDismiss'
+pod 'PullToDismiss' ~> 1.0
 ```
 
 and run `pod install`
 
+### Manually Install
+Download all `*.swift` files and put your project.
 
 ## Communication
 - If you found a bug, open an issue.

@@ -11,44 +11,13 @@ import UIKit
 
 open class PullToDismiss: NSObject {
     
-    /// Background
-    ///
-    /// - none: no shadow view
-    /// - shadow(color, alpha): have shadow view (view color, view initial alpha)
-    public enum Background {
-        case none
-        case shadow(UIColor, CGFloat) // color(RGB), alpha
-        
-        public static let defaultShadow: Background = Background.shadow(.black, 0.5)
-        
-        public func change(color: UIColor? = nil, alpha: CGFloat? = nil) -> Background {
-            switch self {
-            case .none: return self
-            case .shadow(let c, let a): return .shadow(color ?? c, alpha ?? a)
-            }
-        }
-        
-        public var color: UIColor? {
-            switch self {
-            case .none: return nil
-            case .shadow(let color, _): return color
-            }
-        }
-        
-        public var alpha: CGFloat {
-            switch self {
-            case .none: return 0.0
-            case .shadow(_, let alpha): return alpha
-            }
-        }
-    }
-    
     public struct Defaults {
         private init() {}
         public static let dismissableHeightPercentage: CGFloat = 0.33
     }
     
-    open var background: Background = .defaultShadow
+    open var backgroundEffect: BackgroundEffect? = ShadowEffect.default
+    
     public var dismissAction: (() -> Void)?
     public weak var delegateProxy: AnyObject?
     public var dismissableHeightPercentage: CGFloat = Defaults.dismissableHeightPercentage {
@@ -63,8 +32,9 @@ open class PullToDismiss: NSObject {
     fileprivate weak var viewController: UIViewController?
     
     private var panGesture: UIPanGestureRecognizer?
-    private var shadowView: UIView?
+    private var backgroundView: UIView?
     private var navigationBarHeight: CGFloat = 0.0
+    private var blurSaturationDeltaFactor: CGFloat = 1.8
     convenience public init?(scrollView: UIScrollView) {
         guard let viewController = type(of: self).viewControllerFromScrollView(scrollView) else {
             print("a scrollView must be on the view controller.")
@@ -101,31 +71,52 @@ open class PullToDismiss: NSObject {
     
     // MARK: - shadow view
     
-    private func makeShadowView() {
-        guard case .shadow(let color, _) = background else {
+    private func makeBackgroundView() {
+        deleteBackgroundView()
+        guard let backgroundEffect = backgroundEffect else {
             return
         }
-        let shadowView = UIView(frame: .zero)
-        shadowView.backgroundColor = color
-        targetViewController?.view.addSubview(shadowView)
+        let backgroundView = backgroundEffect.makeBackgroundView()
+        backgroundView.frame = targetViewController?.view.bounds ?? .zero
+        
+        switch backgroundEffect.target {
+        case .targetViewController:
+            targetViewController?.view.addSubview(backgroundView)
+            backgroundView.superview?.sendSubview(toBack: backgroundView)
+            backgroundView.frame = targetViewController?.view.bounds ?? .zero
+        case .presentingViewController:
+            targetViewController?.presentingViewController?.view.addSubview(backgroundView)
+            backgroundView.frame = targetViewController?.presentingViewController?.view.bounds ?? .zero
+        }
+
         targetViewController?.view.clipsToBounds = false
-        shadowView.frame = targetViewController?.view.bounds ?? .zero
-        shadowView.superview?.sendSubview(toBack: shadowView)
-        self.shadowView = shadowView
+
+        self.backgroundView = backgroundView
     }
     
-    private func updateShadowView() {
-        guard case .shadow(_, let alphaRate) = background else {
+    private func updateBackgroundView() {
+        guard let backgroundEffect = backgroundEffect else {
             return
         }
+
         let targetViewOriginY: CGFloat = targetViewController?.view.frame.origin.y ?? 0.0
         let targetViewHeight: CGFloat = targetViewController?.view.frame.height ?? 0.0
-        self.shadowView?.alpha = (1.0 - (targetViewOriginY / (targetViewHeight * dismissableHeightPercentage))) * alphaRate
+        let rate: CGFloat = (1.0 - (targetViewOriginY / (targetViewHeight * dismissableHeightPercentage)))
+        
+        backgroundEffect.applyEffect(view: backgroundView, rate: rate)
     }
     
-    private func deleteShadowView() {
-        self.shadowView?.removeFromSuperview()
-        self.shadowView = nil
+    private func deleteBackgroundView() {
+        backgroundView?.removeFromSuperview()
+        backgroundView = nil
+        targetViewController?.view.clipsToBounds = true
+    }
+    
+    private func resetBackgroundView() {
+        guard let backgroundEffect = backgroundEffect else {
+            return
+        }
+        backgroundEffect.applyEffect(view: backgroundView, rate: 1.0)
     }
     
     @objc private func handlePanGesture(_ gesture: UIPanGestureRecognizer) {
@@ -144,8 +135,10 @@ open class PullToDismiss: NSObject {
     }
     
     fileprivate func startDragging() {
+        targetViewController?.view.layer.removeAllAnimations()
+        backgroundView?.layer.removeAllAnimations()
         viewPositionY = 0.0
-        makeShadowView()
+        makeBackgroundView()
     }
     
     fileprivate func updateViewPosition(offset: CGFloat) {
@@ -156,25 +149,29 @@ open class PullToDismiss: NSObject {
         }
         viewPositionY += addOffset
         targetViewController?.view.frame.origin.y = max(0.0, viewPositionY)
-        shadowView?.frame.origin.y = -(targetViewController?.view.frame.origin.y ?? 0.0)
-        updateShadowView()
+        if case .some(.targetViewController) = backgroundEffect?.target {
+            backgroundView?.frame.origin.y = -(targetViewController?.view.frame.origin.y ?? 0.0)
+        }
+        updateBackgroundView()
     }
     
     fileprivate func finishDragging() {
         let originY = targetViewController?.view.frame.origin.y ?? 0.0
         let dismissableHeight = (targetViewController?.view.frame.height ?? 0.0) * dismissableHeightPercentage
         if originY > dismissableHeight {
-            deleteShadowView()
+            deleteBackgroundView()
             _ = dismissAction?() ?? dismiss()
         } else if originY != 0.0 {
-            if targetViewController?.view.frame.minY != 0.0 {
-                UIView.perform(.delete, on: [], options: [], animations: { [weak self] in
-                    self?.targetViewController?.view.frame.origin.y = 0.0
-                    self?.shadowView?.alpha = self?.background.alpha ?? 0.0
-                }) { [weak self] _ in
-                    self?.deleteShadowView()
+            UIView.perform(.delete, on: [], options: [.allowUserInteraction], animations: { [weak self] in
+                self?.targetViewController?.view.frame.origin.y = 0.0
+                self?.resetBackgroundView()
+            }) { [weak self] finished in
+                if finished {
+                    self?.deleteBackgroundView()
                 }
             }
+        } else {
+            self.deleteBackgroundView()
         }
         viewPositionY = 0.0
     }
@@ -192,19 +189,19 @@ open class PullToDismiss: NSObject {
     
     // MARK: - delegates
     
-    public var scrollViewDelegate: UIScrollViewDelegate? {
+    public weak var scrollViewDelegate: UIScrollViewDelegate? {
         return delegateProxy as? UIScrollViewDelegate
     }
     
-    public var tableViewDelegate: UITableViewDelegate? {
+    public weak var tableViewDelegate: UITableViewDelegate? {
         return delegateProxy as? UITableViewDelegate
     }
     
-    public var collectionViewDelegate: UICollectionViewDelegate? {
+    public weak var collectionViewDelegate: UICollectionViewDelegate? {
         return delegateProxy as? UICollectionViewDelegate
     }
     
-    public var collectionViewDelegateFlowLayout: UICollectionViewDelegateFlowLayout? {
+    public weak var collectionViewDelegateFlowLayout: UICollectionViewDelegateFlowLayout? {
         return delegateProxy as? UICollectionViewDelegateFlowLayout
     }
 }

@@ -12,11 +12,11 @@ import PullToDismiss
 class Config {
     static let shared: Config = Config()
     
-    var background: PullToDismiss.Background = PullToDismiss.Background.defaultShadow
+    var backgroundEffect: BackgroundEffect? = ShadowEffect.default
     var dismissableHeightPercentage: CGFloat = PullToDismiss.Defaults.dismissableHeightPercentage
     
     func adaptSetting(pullToDismiss: PullToDismiss?) {
-        pullToDismiss?.background = background
+        pullToDismiss?.backgroundEffect = backgroundEffect
         pullToDismiss?.dismissableHeightPercentage = dismissableHeightPercentage
     }
 }
