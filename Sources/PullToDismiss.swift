@@ -11,92 +11,13 @@ import UIKit
 
 open class PullToDismiss: NSObject {
     
-    /// Background
-    ///
-    /// - none: no shadow view
-    /// - shadow(color, alpha): have shadow view (view color, view initial alpha)
-    /// - blur(blurRadius, color, alpha): have blur view (blur radius, blur color, blur color alpha)
-    public enum Background {
-        case none
-        case shadow(UIColor, CGFloat) // color(RGB), alpha
-        
-        @available(iOS, introduced: 9.0)
-        case blur(CGFloat, UIColor, CGFloat) // blurRadius, blur color(RGB), blur alpha
-        
-        public static let defaultShadow: Background = Background.shadow(.black, 0.5)
-        
-        @available(iOS, introduced: 9.0)
-        public static let defaultBlur: Background = Background.blur(20.0, .clear, 0.0)
-        
-        @available(iOS, introduced: 9.0)
-        public static let lightBlur: Background = Background.blur(30.0, UIColor(white: 1.0, alpha: 0.3), 1.0)
-        
-        @available(iOS, introduced: 9.0)
-        public static let extraLightBlur: Background = Background.blur(20.0, UIColor(white: 0.97, alpha: 0.82), 1.0)
-        
-        @available(iOS, introduced: 9.0)
-        public static let darkBlur: Background = Background.blur(20.0, UIColor(white: 0.11, alpha: 0.73), 1.0)
-        
-        @available(iOS, introduced: 9.0)
-        public func change(color: UIColor? = nil, alpha: CGFloat? = nil, blur: CGFloat? = nil) -> Background {
-                switch self {
-                case .none: return self
-                case .shadow(let c, let a): return .shadow(color ?? c, alpha ?? a)
-                case .blur(let b, let c, let a): return .blur(blur ?? b, color ?? c, alpha ?? a)
-                }
-        }
-
-        @available(iOS, obsoleted: 9.0)
-        public func change(color: UIColor? = nil, alpha: CGFloat? = nil) -> Background {
-            switch self {
-            case .none: return self
-            case .shadow(let c, let a): return .shadow(color ?? c, alpha ?? a)
-            default:
-                fatalError()
-            }
-        }
-
-        public var color: UIColor? {
-            if #available(iOS 9.0, *) {
-                switch self {
-                case .none: return nil
-                case .shadow(let color, _): return color
-                case .blur(_, let color, _): return color
-                }
-            } else {
-                switch self {
-                case .none: return nil
-                case .shadow(let color, _): return color
-                default:
-                    fatalError()
-                }
-            }
-        }
-        
-        public var alpha: CGFloat {
-            if #available(iOS 9.0, *) {
-                switch self {
-                case .none: return 0.0
-                case .shadow(_, let alpha): return alpha
-                case .blur(_, _, let alpha): return alpha
-                }
-            } else {
-                switch self {
-                case .none: return 0.0
-                case .shadow(_, let alpha): return alpha
-                default:
-                    fatalError()
-                }
-            }
-        }
-    }
-    
     public struct Defaults {
         private init() {}
         public static let dismissableHeightPercentage: CGFloat = 0.33
     }
     
-    open var background: Background = .defaultShadow
+    open var backgroundEffect: BackgroundEffect? = ShadowEffect.default
+    
     public var dismissAction: (() -> Void)?
     public weak var delegateProxy: AnyObject?
     public var dismissableHeightPercentage: CGFloat = Defaults.dismissableHeightPercentage {
@@ -111,8 +32,7 @@ open class PullToDismiss: NSObject {
     fileprivate weak var viewController: UIViewController?
     
     private var panGesture: UIPanGestureRecognizer?
-    private var shadowView: UIView?
-    private var blurView: UIView?
+    private var backgroundView: UIView?
     private var navigationBarHeight: CGFloat = 0.0
     private var blurSaturationDeltaFactor: CGFloat = 1.8
     convenience public init?(scrollView: UIScrollView) {
@@ -151,113 +71,52 @@ open class PullToDismiss: NSObject {
     
     // MARK: - shadow view
     
-    private func makeBackgroundViewIfNeeded() {
+    private func makeBackgroundView() {
         deleteBackgroundView()
-        if #available(iOS 9.0, *) {
-            switch background {
-            case .shadow(let color, let alpha):
-                let shadowView = UIView(frame: .zero)
-                shadowView.backgroundColor = color
-                shadowView.alpha = alpha
-                targetViewController?.view.addSubview(shadowView)
-                targetViewController?.view.clipsToBounds = false
-                shadowView.frame = targetViewController?.view.bounds ?? .zero
-                shadowView.superview?.sendSubview(toBack: shadowView)
-                self.shadowView = shadowView
-            case .blur(let blurRadius, let colorTint, let colorTintAlpha):
-                let blurView = CustomBlurView(radius: blurRadius)
-                blurView.colorTint = colorTint
-                blurView.colorTintAlpha = colorTintAlpha
-                blurView.saturationDeltaFactor = blurSaturationDeltaFactor
-                targetViewController?.presentingViewController?.view.addSubview(blurView)
-                targetViewController?.view.clipsToBounds = false
-                blurView.frame = targetViewController?.view.bounds ?? .zero
-                self.blurView = blurView
-            default:
-                ()
-            }
-        } else {
-            switch background {
-            case .shadow(let color, let alpha):
-                let shadowView = UIView(frame: .zero)
-                shadowView.backgroundColor = color
-                shadowView.alpha = alpha
-                targetViewController?.view.addSubview(shadowView)
-                targetViewController?.view.clipsToBounds = false
-                shadowView.frame = targetViewController?.view.bounds ?? .zero
-                shadowView.superview?.sendSubview(toBack: shadowView)
-                self.shadowView = shadowView
-            default:
-                ()
-            }
+        guard let backgroundEffect = backgroundEffect else {
+            return
         }
+        let backgroundView = backgroundEffect.makeBackgroundView()
+        backgroundView.frame = targetViewController?.view.bounds ?? .zero
+        
+        switch backgroundEffect.target {
+        case .targetViewController:
+            targetViewController?.view.addSubview(backgroundView)
+            backgroundView.superview?.sendSubview(toBack: backgroundView)
+            backgroundView.frame = targetViewController?.view.bounds ?? .zero
+        case .presentingViewController:
+            targetViewController?.presentingViewController?.view.addSubview(backgroundView)
+            backgroundView.frame = targetViewController?.presentingViewController?.view.bounds ?? .zero
+        }
+
+        targetViewController?.view.clipsToBounds = false
+
+        self.backgroundView = backgroundView
     }
     
     private func updateBackgroundView() {
-        if #available(iOS 9.0, *) {
-            switch background {
-            case .shadow(_, let alpha):
-                let targetViewOriginY: CGFloat = targetViewController?.view.frame.origin.y ?? 0.0
-                let targetViewHeight: CGFloat = targetViewController?.view.frame.height ?? 0.0
-                let rate: CGFloat = (1.0 - (targetViewOriginY / (targetViewHeight * dismissableHeightPercentage)))
-                self.shadowView?.alpha = rate * alpha
-            case .blur(let blurRadius, _, let colorTintAlpha):
-                let targetViewOriginY: CGFloat = targetViewController?.view.frame.origin.y ?? 0.0
-                let targetViewHeight: CGFloat = targetViewController?.view.frame.height ?? 0.0
-                let rate: CGFloat = (1.0 - (targetViewOriginY / (targetViewHeight * dismissableHeightPercentage)))
-                (self.blurView as? CustomBlurView)?.blurRadius = rate * blurRadius
-                (self.blurView as? CustomBlurView)?.colorTintAlpha = rate * colorTintAlpha
-                (self.blurView as? CustomBlurView)?.saturationDeltaFactor = rate * (blurSaturationDeltaFactor - 1.0) + 1.0
-            default:
-                ()
-            }
-        } else {
-            switch background {
-            case .shadow(_, let alpha):
-                let targetViewOriginY: CGFloat = targetViewController?.view.frame.origin.y ?? 0.0
-                let targetViewHeight: CGFloat = targetViewController?.view.frame.height ?? 0.0
-                let rate: CGFloat = (1.0 - (targetViewOriginY / (targetViewHeight * dismissableHeightPercentage)))
-                self.shadowView?.alpha = rate * alpha
-            default:
-                ()
-            }
+        guard let backgroundEffect = backgroundEffect else {
+            return
         }
+
+        let targetViewOriginY: CGFloat = targetViewController?.view.frame.origin.y ?? 0.0
+        let targetViewHeight: CGFloat = targetViewController?.view.frame.height ?? 0.0
+        let rate: CGFloat = (1.0 - (targetViewOriginY / (targetViewHeight * dismissableHeightPercentage)))
+        
+        backgroundEffect.applyEffect(view: backgroundView, rate: rate)
     }
     
     private func deleteBackgroundView() {
-        if #available(iOS 9.0, *) {
-            self.shadowView?.removeFromSuperview()
-            self.shadowView = nil
-            self.blurView?.removeFromSuperview()
-            self.blurView = nil
-            targetViewController?.view.clipsToBounds = true
-        } else {
-            self.shadowView?.removeFromSuperview()
-            self.shadowView = nil
-            targetViewController?.view.clipsToBounds = true
-        }
+        backgroundView?.removeFromSuperview()
+        backgroundView = nil
+        targetViewController?.view.clipsToBounds = true
     }
     
     private func resetBackgroundView() {
-        if #available(iOS 9.0, *) {
-            switch background {
-            case .shadow(_, let alpha):
-                self.shadowView?.alpha = alpha
-            case .blur(let blurRadius, _, let colorTintAlpha):
-                (self.blurView as? CustomBlurView)?.blurRadius = blurRadius
-                (self.blurView as? CustomBlurView)?.colorTintAlpha = colorTintAlpha
-                (self.blurView as? CustomBlurView)?.saturationDeltaFactor = blurSaturationDeltaFactor
-            default:
-                ()
-            }
-        } else {
-            switch background {
-            case .shadow(_, let alpha):
-                self.shadowView?.alpha = alpha
-            default:
-                ()
-            }
+        guard let backgroundEffect = backgroundEffect else {
+            return
         }
+        backgroundEffect.applyEffect(view: backgroundView, rate: 1.0)
     }
     
     @objc private func handlePanGesture(_ gesture: UIPanGestureRecognizer) {
@@ -276,11 +135,10 @@ open class PullToDismiss: NSObject {
     }
     
     fileprivate func startDragging() {
-        viewPositionY = 0.0
-        makeBackgroundViewIfNeeded()
         targetViewController?.view.layer.removeAllAnimations()
-        shadowView?.layer.removeAllAnimations()
-        blurView?.layer.removeAllAnimations()
+        backgroundView?.layer.removeAllAnimations()
+        viewPositionY = 0.0
+        makeBackgroundView()
     }
     
     fileprivate func updateViewPosition(offset: CGFloat) {
@@ -291,7 +149,9 @@ open class PullToDismiss: NSObject {
         }
         viewPositionY += addOffset
         targetViewController?.view.frame.origin.y = max(0.0, viewPositionY)
-        shadowView?.frame.origin.y = -(targetViewController?.view.frame.origin.y ?? 0.0)
+        if case .some(.targetViewController) = backgroundEffect?.target {
+            backgroundView?.frame.origin.y = -(targetViewController?.view.frame.origin.y ?? 0.0)
+        }
         updateBackgroundView()
     }
     
@@ -302,14 +162,14 @@ open class PullToDismiss: NSObject {
             deleteBackgroundView()
             _ = dismissAction?() ?? dismiss()
         } else if originY != 0.0 {
-                UIView.perform(.delete, on: [], options: [.allowUserInteraction], animations: { [weak self] in
-                    self?.targetViewController?.view.frame.origin.y = 0.0
-                    self?.resetBackgroundView()
-                }) { [weak self] finished in
-                    if finished {
-                        self?.deleteBackgroundView()
-                    }
+            UIView.perform(.delete, on: [], options: [.allowUserInteraction], animations: { [weak self] in
+                self?.targetViewController?.view.frame.origin.y = 0.0
+                self?.resetBackgroundView()
+            }) { [weak self] finished in
+                if finished {
+                    self?.deleteBackgroundView()
                 }
+            }
         } else {
             self.deleteBackgroundView()
         }

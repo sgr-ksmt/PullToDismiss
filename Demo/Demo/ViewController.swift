@@ -49,13 +49,13 @@ class ViewController: UIViewController, UITextFieldDelegate {
         
     private func update(animated: Bool = false) {
         let animations: () -> Void = { [weak self] in
-            self?.backgroundSwitch.selectedSegmentIndex = self?.selectedSegmentIndex(from: Config.shared.background) ?? 0
-            self?.currentColorView.backgroundColor = Config.shared.background.color
-            self?.alphaSlider.setValue(Float(Config.shared.background.alpha), animated: animated)
+            self?.backgroundSwitch.selectedSegmentIndex = self?.selectedSegmentIndex(from: Config.shared.backgroundEffect) ?? 0
+            self?.currentColorView.backgroundColor = Config.shared.backgroundEffect?.color
+            self?.alphaSlider.setValue(Float(Config.shared.backgroundEffect?.alpha ?? 0.0), animated: animated)
             self?.dismissableHeightPercentageSlider.setValue(Float(Config.shared.dismissableHeightPercentage), animated: animated)
             self?.disableView.alpha = self?.backgroundSwitch.selectedSegmentIndex == 0 ? 1.0 : 0.0
-            self?.colorTextField.text = Config.shared.background.color?.hexString.map { "#\($0)" }
-            self?.alphaLabel.text = String(format: "%.2f", Config.shared.background.alpha)
+            self?.colorTextField.text = Config.shared.backgroundEffect?.color?.hexString.map { "#\($0)" }
+            self?.alphaLabel.text = Config.shared.backgroundEffect.map({ String(format: "%.2f", $0.alpha) })
             self?.dismissableHeightPercentageLabel.text = String(format: "%.2f", Config.shared.dismissableHeightPercentage)
         }
         if !animated {
@@ -65,16 +65,17 @@ class ViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
-    private func selectedSegmentIndex(from background: PullToDismiss.Background) -> Int {
-        if case .none = Config.shared.background {
-            return 0
-        } else {
+    private func selectedSegmentIndex(from backgroundEffect: BackgroundEffect?) -> Int {
+        switch backgroundEffect {
+        case .some(let effect) where effect is ShadowEffect:
             return 1
+        default:
+            return 0
         }
     }
     
     @objc private func switchDidChange(segmentedControl: UISegmentedControl) {
-        Config.shared.background = (segmentedControl.selectedSegmentIndex == 0) ? .none : .defaultShadow
+        Config.shared.backgroundEffect = (segmentedControl.selectedSegmentIndex == 0) ? nil : ShadowEffect.default
         view.endEditing(true)
         update(animated: true)
     }
@@ -88,17 +89,17 @@ class ViewController: UIViewController, UITextFieldDelegate {
         if colorTextField.isFirstResponder {
             let text = (colorTextField.text ?? "").replacingOccurrences(of: "#", with: "")
             if text.characters.count == 6 {
-                Config.shared.background = Config.shared.background.change(color: UIColor(hexString: text, alpha: 1.0))
-                currentColorView.backgroundColor = Config.shared.background.color
+                Config.shared.backgroundEffect?.color = UIColor(hexString: text, alpha: 1.0)
+                currentColorView.backgroundColor = Config.shared.backgroundEffect?.color
             } else {
-                Config.shared.background = Config.shared.background.change(color: .clear)
-                currentColorView.backgroundColor = Config.shared.background.color
+                Config.shared.backgroundEffect?.color = .clear
+                currentColorView.backgroundColor = Config.shared.backgroundEffect?.color
             }
         }
     }
     
     @objc private func alphaDidChange(_ slider: UISlider) {
-        Config.shared.background = Config.shared.background.change(alpha: CGFloat(slider.value))
+        Config.shared.backgroundEffect?.alpha = CGFloat(slider.value)
         update()
     }
 
@@ -127,14 +128,14 @@ class ViewController: UIViewController, UITextFieldDelegate {
                     UIView.animate(withDuration: 0.2, animations: { [weak self] in
                         self?.blurSampleImageView.alpha = 0
                     }) { [weak self] _ in
-                        Config.shared.background = .defaultShadow
+                        Config.shared.backgroundEffect = ShadowEffect.default
                         Config.shared.dismissableHeightPercentage = 0.35
                         self?.update()
                     }
                 }
                 let nav = UINavigationController(rootViewController: vc)
                 if #available(iOS 9.0, *) {
-                    Config.shared.background = .lightBlur
+                    Config.shared.backgroundEffect = BlurEffect.light
                 } else {
                     // Fallback on earlier versions
                 }
