@@ -17,9 +17,9 @@ Dismiss ViewController by pulling scroll view or navigation bar in Swift.
 - Easy to use!
 - Support all scroll views. (UIScrollView, UITableView, UICollectionView)
 - Customizable. (dismiss background color, alpha, height percentage of dismiss)
-- Blur support!
 - Available in UIViewController, UINavigationController.
 - Automatically add pan gesture to navigation bar.
+- Blur effect support.
 
 ## Usage
 ### Getting Started
@@ -117,30 +117,35 @@ extension SampleViewController: UITableViewDelegate {
 ```
 
 ### Customize
-You can customize:
+You can customize backgroundEffect, dismissableHeightPercentage:
 
-- background (default: `.shadow(.black, 0.5)`)
+#### Shadow background effet
+
+- background (default: `ShadowEffect.default`, [color: black, alpha: 0.8])
 
 ![img1](Documents/img1.png)
 
 ```swift
-pullToDismiss?.background = .shadow(.red, 0.5) // color: red, alpha: 0.5
+pullToDismiss?.background = ShadowEffect(color: .red, alpha: 0.5) // color: red, alpha: 0.5
 ```
 
-#### Blurred background
-New feature for v1.0
+#### Blur background effect
+New feature for v1.0.
 
 ![gif](Documents/blur_sample.gif)
 
 ```swift
-// preset blur (.extraLightBlur, .lightBlur, .darkBlur)
-pullToDismiss?.background = .extraLightBlur
+// preset blur (.extraLight, .light, .dark)
+pullToDismiss?.background = BlurEffect.extraLight
 
-// set blurRadius, blurColor, blurColorAlpha
-pullToDismiss?.background = Background.blur(20.0, .clear, 0.0)
+// set custom Blur
+pullToDismiss?.background = BlurEffect(color: .red, alpha: 0.5, blurRadius: 40.0, saturationDeltaFactor: 1.8)
 ```
 
-- dismissableHeightPercentage (default: 0.33)
+#### dismissableHeightPercentage
+
+![img2](Documents/img2.png)
+
 
 ```swift
 // to pull half size of view controller, dismiss view controller.
@@ -149,8 +154,9 @@ pullToDismiss?.dismissableHeightPercentage = 0.5
 
 
 ## Requirements
-- iOS 8.0+
-- Xcode 8.0+(Swift 3+)
+- iOS 8.0+ (blur effect: iOS 9.0+)
+- Xcode 8.1+
+- Swift 3.0+
 
 ## Installation
 
@@ -178,6 +184,8 @@ pod 'PullToDismiss' ~> 1.0
 
 and run `pod install`
 
+### Manually Install
+Download all `*.swift` files and put your project.
 
 ## Communication
 - If you found a bug, open an issue.
