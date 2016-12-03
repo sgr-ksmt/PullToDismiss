@@ -33,7 +33,7 @@ public struct ShadowEffect: BackgroundEffect {
 
     public static var `default`: ShadowEffect = ShadowEffect(color: .black, alpha: 0.8)
     
-    init(color: UIColor?, alpha: CGFloat) {
+    public init(color: UIColor?, alpha: CGFloat) {
         self.color = color
         self.alpha = alpha
     }
@@ -87,7 +87,7 @@ public struct BlurEffect: BackgroundEffect {
         saturationDeltaFactor: 1.8
     )
     
-    init(color: UIColor?, alpha: CGFloat, blurRadius: CGFloat, saturationDeltaFactor: CGFloat) {
+    public init(color: UIColor?, alpha: CGFloat, blurRadius: CGFloat, saturationDeltaFactor: CGFloat) {
         self.color = color
         self.alpha = alpha
         self.blurRadius = blurRadius
