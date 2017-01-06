@@ -66,6 +66,10 @@ open class PullToDismiss: NSObject {
         return viewController?.navigationController ?? viewController
     }
     
+    private var haveShadowEffect: Bool {
+        return backgroundEffect != nil || edgeShadow != nil
+    }
+    
     fileprivate func dismiss() {
         targetViewController?.dismiss(animated: true, completion: nil)
     }
@@ -89,8 +93,6 @@ open class PullToDismiss: NSObject {
             targetViewController?.presentingViewController?.view.addSubview(backgroundView)
             backgroundView.frame = targetViewController?.presentingViewController?.view.bounds ?? .zero
         }
-
-        targetViewController?.view.clipsToBounds = false
 
         self.backgroundView = backgroundView
     }
@@ -137,6 +139,9 @@ open class PullToDismiss: NSObject {
         viewPositionY = 0.0
         makeBackgroundView()
         targetViewController?.view.applyEdgeShadow(edgeShadow)
+        if haveShadowEffect {
+            targetViewController?.view.clipsToBounds = false
+        }
     }
     
     fileprivate func updateViewPosition(offset: CGFloat) {

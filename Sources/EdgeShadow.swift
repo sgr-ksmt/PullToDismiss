@@ -11,7 +11,7 @@ import UIKit
 
 public struct EdgeShadow {
     static let `default` = EdgeShadow(
-        opacity: 0.5, radius: 5.0, color: .black, offset: CGSize(width: 0.0, height: -3.0)
+        opacity: 0.7, radius: 5.0, color: .black, offset: CGSize(width: 0.0, height: -5.0)
     )
     
     let opacity: Float
