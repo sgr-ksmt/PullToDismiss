@@ -14,6 +14,8 @@
 		4D870AB01DDAA0CD00575A28 /* PullToDismissTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D870AAF1DDAA0CD00575A28 /* PullToDismissTests.swift */; };
 		4D870AB21DDAA0CD00575A28 /* PullToDismiss.h in Headers */ = {isa = PBXBuildFile; fileRef = 4D870AA41DDAA0CD00575A28 /* PullToDismiss.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4D9D97C51DF058C700C10C87 /* CustomBlurView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D9D97C41DF058C700C10C87 /* CustomBlurView.swift */; };
+		4DBDB74F1E1F69770068AA1F /* EdgeShadow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DBDB74E1E1F69770068AA1F /* EdgeShadow.swift */; };
+		4DBDB7511E1F6FFA0068AA1F /* UIView+EdgeShadow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DBDB7501E1F6FFA0068AA1F /* UIView+EdgeShadow.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,6 +39,8 @@
 		4D870AAF1DDAA0CD00575A28 /* PullToDismissTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PullToDismissTests.swift; sourceTree = "<group>"; };
 		4D870AB11DDAA0CD00575A28 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4D9D97C41DF058C700C10C87 /* CustomBlurView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomBlurView.swift; sourceTree = "<group>"; };
+		4DBDB74E1E1F69770068AA1F /* EdgeShadow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EdgeShadow.swift; sourceTree = "<group>"; };
+		4DBDB7501E1F6FFA0068AA1F /* UIView+EdgeShadow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+EdgeShadow.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,6 +69,8 @@
 				4D2F15C21DF2D570000A5172 /* BackgroundEffect.swift */,
 				4D5A351E1DDBF18B00ED9D54 /* PullToDismiss+Proxy.swift */,
 				4D9D97C41DF058C700C10C87 /* CustomBlurView.swift */,
+				4DBDB74E1E1F69770068AA1F /* EdgeShadow.swift */,
+				4DBDB7501E1F6FFA0068AA1F /* UIView+EdgeShadow.swift */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -236,8 +242,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4DBDB74F1E1F69770068AA1F /* EdgeShadow.swift in Sources */,
 				4D5A35191DDB21DB00ED9D54 /* PullToDismiss.swift in Sources */,
 				4D5A351F1DDBF18B00ED9D54 /* PullToDismiss+Proxy.swift in Sources */,
+				4DBDB7511E1F6FFA0068AA1F /* UIView+EdgeShadow.swift in Sources */,
 				4D2F15C31DF2D570000A5172 /* BackgroundEffect.swift in Sources */,
 				4D9D97C51DF058C700C10C87 /* CustomBlurView.swift in Sources */,
 			);
