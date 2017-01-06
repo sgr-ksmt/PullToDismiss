@@ -19,7 +19,8 @@ extension UIView {
         layer.shadowRadius = shadow.radius
         layer.shadowOffset = shadow.offset
         layer.shadowColor = shadow.color.cgColor
-        layer.shadowPath = UIBezierPath(rect: self.bounds).cgPath
+//        layer.shadowPath = UIBezierPath(rect: self.bounds).cgPath
+        
     }
     
     func updateEdgeShadow(_ shadow: EdgeShadow?, rate: CGFloat) {
@@ -28,7 +29,6 @@ extension UIView {
             return
         }
         layer.shadowOpacity = shadow.opacity * Float(rate)
-        layer.shadowOffset = CGSize(width: shadow.offset.width * rate, height: shadow.offset.height * rate)
     }
     
     func detachEdgeShadow() {
