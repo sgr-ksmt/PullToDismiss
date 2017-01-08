@@ -1,11 +1,8 @@
 # CHANGELOG
 
-## Unreleased
+## *Unreleased*
 
 #### Added
-- Edge shadow #??
-- CHANGELOG.md
-- wrote more documents.
 
 #### Removed
 
@@ -13,7 +10,11 @@
 
 #### Fixed
 
-## Released
+## **Released**
+### v1.1
+#### Added
+- Edge shadow #9
+- CHANGELOG.md
 
 ### v1.0 #7
 Major Update. It is stable version.
@@ -22,13 +23,9 @@ Major Update. It is stable version.
 - Blur background effect #3
 - SwiftLint
 
-#### Removed
-
 #### Updated
 - restructure `BackgroundEffect` type. (like POP)
 - README.md
-
-#### Fixed
 
 ### v0.1.0(beta)
 Initial Release as beta. #1

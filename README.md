@@ -187,6 +187,9 @@ and run `pod install`
 ### Manually Install
 Download all `*.swift` files and put your project.
 
+## Change log
+Change log is [here](https://github.com/sgr-ksmt/PullToDismiss/blob/master/CHANGELOG.md).
+
 ## Communication
 - If you found a bug, open an issue.
 - If you have a feature request, open an issue.

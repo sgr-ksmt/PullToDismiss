@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = "PullToDismiss"
-  s.version          = "1.0"
+  s.version          = "1.1"
   s.summary          = "Dismiss ViewController by pulling scroll view or navigation bar in Swift."
   s.homepage         = "https://github.com/sgr-ksmt/PullToDismiss"
   # s.screenshots     = ""
