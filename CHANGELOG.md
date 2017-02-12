@@ -1,16 +1,7 @@
 # CHANGELOG
+### v1.1.1
+- Fixed crash problem using WKWebView's scrollview. #18
 
-## *Unreleased*
-
-#### Added
-
-#### Removed
-
-#### Updated
-
-#### Fixed
-
-## **Released**
 ### v1.1
 #### Added
 - Edge shadow #9
