@@ -32,6 +32,7 @@ open class PullToDismiss: NSObject {
     fileprivate var previousContentOffsetY: CGFloat = 0.0
     fileprivate weak var viewController: UIViewController?
     
+    private var __scrollView: UIScrollView?
     private var panGesture: UIPanGestureRecognizer?
     private var backgroundView: UIView?
     private var navigationBarHeight: CGFloat = 0.0
@@ -47,6 +48,7 @@ open class PullToDismiss: NSObject {
     public init(scrollView: UIScrollView, viewController: UIViewController, navigationBar: UIView? = nil) {
         super.init()
         scrollView.delegate = self
+        __scrollView = scrollView
         self.viewController = viewController
         if let navigationBar = navigationBar ?? viewController.navigationController?.navigationBar {
             let gesture = UIPanGestureRecognizer(target: self, action: #selector(handlePanGesture(_:)))
@@ -60,6 +62,9 @@ open class PullToDismiss: NSObject {
         if let panGesture = panGesture {
             panGesture.view?.removeGestureRecognizer(panGesture)
         }
+        
+        __scrollView?.delegate = nil
+        __scrollView = nil
     }
     
     fileprivate var targetViewController: UIViewController? {
