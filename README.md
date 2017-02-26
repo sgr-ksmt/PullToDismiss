@@ -4,7 +4,10 @@ PullToDismiss provides dismiss modal viewcontroller function by pulling scrollvi
 [![GitHub release](https://img.shields.io/github/release/sgr-ksmt/PullToDismiss.svg)](https://github.com/sgr-ksmt/PullToDismiss/releases)
 ![Language](https://img.shields.io/badge/language-Swift%203-orange.svg)
 [![Carthage Compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
-[![CocoaPods  Compatible](https://img.shields.io/badge/Cocoa%20Pods-compatible-4BC51D.svg?style=flat)](https://cocoapods.org)
+[![CocoaPods](https://img.shields.io/badge/Cocoa%20Pods-✓-4BC51D.svg?style=flat)](https://cocoapods.org/pods/PullToDismiss)
+[![CocoaPodsDL](https://img.shields.io/cocoapods/dt/PullToDismiss.svg)]()  
+
+<br />
 
 |            sample            |            blur sample            |
 |:----------------------------:|:---------------------------------:|
