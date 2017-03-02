@@ -170,7 +170,7 @@ pullToDismiss?.dismissableHeightPercentage = 0.5
 - Add the following to your *Cartfile*:
 
 ```bash
-github 'sgr-ksmt/PullToDismiss' ~> 1.0
+github "sgr-ksmt/PullToDismiss" ~> 1.0
 ```
 
 - Run `carthage update`
