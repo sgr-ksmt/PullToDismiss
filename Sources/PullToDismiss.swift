@@ -132,7 +132,7 @@ open class PullToDismiss: NSObject {
             updateViewPosition(offset: diff)
             gesture.setTranslation(.zero, in: gesture.view)
         case .ended:
-            finishDragging()
+            finishDragging(CGPoint.zero)
         default:
             break
         }
@@ -169,10 +169,10 @@ open class PullToDismiss: NSObject {
         targetViewController?.view.updateEdgeShadow(edgeShadow, rate: rate)
     }
     
-    fileprivate func finishDragging() {
+    fileprivate func finishDragging(withVelocity velocity: CGPoint) {
         let originY = targetViewController?.view.frame.origin.y ?? 0.0
         let dismissableHeight = (targetViewController?.view.frame.height ?? 0.0) * dismissableHeightPercentage
-        if originY > dismissableHeight {
+        if originY > dismissableHeight || originY > 0 && velocity.y < 0 {
             deleteBackgroundView()
             targetViewController?.view.detachEdgeShadow()
             _ = dismissAction?() ?? dismiss()
@@ -248,13 +248,13 @@ extension PullToDismiss: UIScrollViewDelegate {
     }
     
     public func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+        finishDragging(withVelocity: velocity)
+        dragging = false
+        previousContentOffsetY = 0.0
         scrollViewDelegate?.scrollViewWillEndDragging?(scrollView, withVelocity: velocity, targetContentOffset: targetContentOffset)
     }
     
     public func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        finishDragging()
-        dragging = false
-        previousContentOffsetY = 0.0
         scrollViewDelegate?.scrollViewDidEndDragging?(scrollView, willDecelerate: decelerate)
     }
     
