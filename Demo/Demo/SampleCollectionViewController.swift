@@ -28,7 +28,7 @@ class SampleCollectionViewController: UICollectionViewController {
         navigationController?.navigationBar.setValue(UIBarPosition.topAttached.rawValue, forKey: "barPosition")
         pullToDismiss = PullToDismiss(scrollView: collectionView!)
         Config.shared.adaptSetting(pullToDismiss: pullToDismiss)
-        pullToDismiss?.delegateProxy = self
+        pullToDismiss?.delegate = self
         view.backgroundColor = .white
     }
 

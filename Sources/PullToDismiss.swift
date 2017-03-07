@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-open class PullToDismiss: NSObject {
+open class PullToDismiss: NSObject, UIScrollViewDelegate, UITableViewDelegate, UICollectionViewDelegate {
     
     public struct Defaults {
         private init() {}
@@ -20,7 +20,15 @@ open class PullToDismiss: NSObject {
     open var edgeShadow: EdgeShadow? = EdgeShadow.default
     
     public var dismissAction: (() -> Void)?
-    public weak var delegateProxy: AnyObject?
+    public weak var delegate: UIScrollViewDelegate? {
+        didSet {
+            var delegates: [UIScrollViewDelegate] = [self]
+            if let delegate = delegate {
+                delegates.append(delegate)
+            }
+            proxy = ScrollViewDelegateProxy(delegates: delegates)
+        }
+    }
     public var dismissableHeightPercentage: CGFloat = Defaults.dismissableHeightPercentage {
         didSet {
             dismissableHeightPercentage = min(max(0.0, dismissableHeightPercentage), 1.0)
@@ -33,6 +41,13 @@ open class PullToDismiss: NSObject {
     fileprivate weak var viewController: UIViewController?
     
     private var __scrollView: UIScrollView?
+    
+    private var proxy: ScrollViewDelegateProxy? {
+        didSet {
+            __scrollView?.delegate = proxy
+        }
+    }
+    
     private var panGesture: UIPanGestureRecognizer?
     private var backgroundView: UIView?
     private var navigationBarHeight: CGFloat = 0.0
@@ -47,8 +62,8 @@ open class PullToDismiss: NSObject {
     
     public init(scrollView: UIScrollView, viewController: UIViewController, navigationBar: UIView? = nil) {
         super.init()
-        scrollView.delegate = self
         __scrollView = scrollView
+        proxy = ScrollViewDelegateProxy(delegates: [self])
         self.viewController = viewController
         if let navigationBar = navigationBar ?? viewController.navigationController?.navigationBar {
             let gesture = UIPanGestureRecognizer(target: self, action: #selector(handlePanGesture(_:)))
@@ -63,7 +78,7 @@ open class PullToDismiss: NSObject {
             panGesture.view?.removeGestureRecognizer(panGesture)
         }
         
-        __scrollView?.delegate = nil
+        proxy = nil
         __scrollView = nil
     }
     
@@ -206,24 +221,24 @@ open class PullToDismiss: NSObject {
     
     // MARK: - delegates
     
-    public weak var scrollViewDelegate: UIScrollViewDelegate? {
-        return delegateProxy as? UIScrollViewDelegate
-    }
-    
-    public weak var tableViewDelegate: UITableViewDelegate? {
-        return delegateProxy as? UITableViewDelegate
-    }
-    
-    public weak var collectionViewDelegate: UICollectionViewDelegate? {
-        return delegateProxy as? UICollectionViewDelegate
-    }
-    
-    public weak var collectionViewDelegateFlowLayout: UICollectionViewDelegateFlowLayout? {
-        return delegateProxy as? UICollectionViewDelegateFlowLayout
-    }
+//    public weak var scrollViewDelegate: UIScrollViewDelegate? {
+//        return delegateProxy as? UIScrollViewDelegate
+//    }
+//    
+//    public weak var tableViewDelegate: UITableViewDelegate? {
+//        return delegateProxy as? UITableViewDelegate
+//    }
+//    
+//    public weak var collectionViewDelegate: UICollectionViewDelegate? {
+//        return delegateProxy as? UICollectionViewDelegate
+//    }
+//    
+//    public weak var collectionViewDelegateFlowLayout: UICollectionViewDelegateFlowLayout? {
+//        return delegateProxy as? UICollectionViewDelegateFlowLayout
+//    }
 }
 
-extension PullToDismiss: UIScrollViewDelegate {
+extension PullToDismiss /*: UIScrollViewDelegate*/ {
     public func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if dragging {
             let diff = -(scrollView.contentOffset.y - previousContentOffsetY)
@@ -233,60 +248,60 @@ extension PullToDismiss: UIScrollViewDelegate {
             }
             previousContentOffsetY = scrollView.contentOffset.y
         }
-        scrollViewDelegate?.scrollViewDidScroll?(scrollView)
+//        scrollViewDelegate?.scrollViewDidScroll?(scrollView)
     }
     
-    public func scrollViewDidZoom(_ scrollView: UIScrollView) {
-        scrollViewDelegate?.scrollViewDidZoom?(scrollView)
-    }
+//    public func scrollViewDidZoom(_ scrollView: UIScrollView) {
+//        scrollViewDelegate?.scrollViewDidZoom?(scrollView)
+//    }
     
     public func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         startDragging()
         dragging = true
         previousContentOffsetY = scrollView.contentOffset.y
-        scrollViewDelegate?.scrollViewWillBeginDragging?(scrollView)
+//        scrollViewDelegate?.scrollViewWillBeginDragging?(scrollView)
     }
     
     public func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-        scrollViewDelegate?.scrollViewWillEndDragging?(scrollView, withVelocity: velocity, targetContentOffset: targetContentOffset)
+//        scrollViewDelegate?.scrollViewWillEndDragging?(scrollView, withVelocity: velocity, targetContentOffset: targetContentOffset)
     }
     
     public func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         finishDragging()
         dragging = false
         previousContentOffsetY = 0.0
-        scrollViewDelegate?.scrollViewDidEndDragging?(scrollView, willDecelerate: decelerate)
+//        scrollViewDelegate?.scrollViewDidEndDragging?(scrollView, willDecelerate: decelerate)
     }
     
-    public func scrollViewWillBeginDecelerating(_ scrollView: UIScrollView) {
-        scrollViewDelegate?.scrollViewWillBeginDecelerating?(scrollView)
-    }
-    
-    public func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        scrollViewDelegate?.scrollViewDidEndDecelerating?(scrollView)
-    }
-    
-    public func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
-        scrollViewDelegate?.scrollViewDidEndScrollingAnimation?(scrollView)
-    }
-    
-    public func viewForZooming(in scrollView: UIScrollView) -> UIView? {
-        return scrollViewDelegate?.viewForZooming?(in: scrollView)
-    }
-    
-    public func scrollViewWillBeginZooming(_ scrollView: UIScrollView, with view: UIView?) {
-        scrollViewDelegate?.scrollViewWillBeginZooming?(scrollView, with: view)
-    }
-    
-    public func scrollViewDidEndZooming(_ scrollView: UIScrollView, with view: UIView?, atScale scale: CGFloat) {
-        scrollViewDelegate?.scrollViewDidEndZooming?(scrollView, with: view, atScale: scale)
-    }
-    
-    public func scrollViewShouldScrollToTop(_ scrollView: UIScrollView) -> Bool {
-        return scrollViewDelegate?.scrollViewShouldScrollToTop?(scrollView) ?? true
-    }
-    
-    public func scrollViewDidScrollToTop(_ scrollView: UIScrollView) {
-        scrollViewDelegate?.scrollViewDidScrollToTop?(scrollView)
-    }
+//    public func scrollViewWillBeginDecelerating(_ scrollView: UIScrollView) {
+//        scrollViewDelegate?.scrollViewWillBeginDecelerating?(scrollView)
+//    }
+//    
+//    public func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+//        scrollViewDelegate?.scrollViewDidEndDecelerating?(scrollView)
+//    }
+//    
+//    public func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
+//        scrollViewDelegate?.scrollViewDidEndScrollingAnimation?(scrollView)
+//    }
+//    
+//    public func viewForZooming(in scrollView: UIScrollView) -> UIView? {
+//        return scrollViewDelegate?.viewForZooming?(in: scrollView)
+//    }
+//    
+//    public func scrollViewWillBeginZooming(_ scrollView: UIScrollView, with view: UIView?) {
+//        scrollViewDelegate?.scrollViewWillBeginZooming?(scrollView, with: view)
+//    }
+//    
+//    public func scrollViewDidEndZooming(_ scrollView: UIScrollView, with view: UIView?, atScale scale: CGFloat) {
+//        scrollViewDelegate?.scrollViewDidEndZooming?(scrollView, with: view, atScale: scale)
+//    }
+//    
+//    public func scrollViewShouldScrollToTop(_ scrollView: UIScrollView) -> Bool {
+//        return scrollViewDelegate?.scrollViewShouldScrollToTop?(scrollView) ?? true
+//    }
+//    
+//    public func scrollViewDidScrollToTop(_ scrollView: UIScrollView) {
+//        scrollViewDelegate?.scrollViewDidScrollToTop?(scrollView)
+//    }
 }
