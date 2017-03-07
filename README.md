@@ -4,7 +4,12 @@ PullToDismiss provides dismiss modal viewcontroller function by pulling scrollvi
 [![GitHub release](https://img.shields.io/github/release/sgr-ksmt/PullToDismiss.svg)](https://github.com/sgr-ksmt/PullToDismiss/releases)
 ![Language](https://img.shields.io/badge/language-Swift%203-orange.svg)
 [![Carthage Compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
-[![CocoaPods  Compatible](https://img.shields.io/badge/Cocoa%20Pods-compatible-4BC51D.svg?style=flat)](https://cocoapods.org)
+[![CocoaPods](https://img.shields.io/badge/Cocoa%20Pods-✓-4BC51D.svg?style=flat)](https://cocoapods.org/pods/PullToDismiss)
+[![CocoaPodsDL](https://img.shields.io/cocoapods/dt/PullToDismiss.svg)]()
+[![Awesome](https://cdn.rawgit.com/sindresorhus/awesome/d7305f38d29fed78fa85652e3a63e154dd8e8829/media/badge.svg)](https://github.com/matteocrippa/awesome-swift#ui)  
+
+
+<br />
 
 |            sample            |            blur sample            |
 |:----------------------------:|:---------------------------------:|
@@ -165,7 +170,7 @@ pullToDismiss?.dismissableHeightPercentage = 0.5
 - Add the following to your *Cartfile*:
 
 ```bash
-github 'sgr-ksmt/PullToDismiss' ~> 1.0
+github "sgr-ksmt/PullToDismiss" ~> 1.0
 ```
 
 - Run `carthage update`
