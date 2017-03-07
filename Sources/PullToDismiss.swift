@@ -79,6 +79,7 @@ open class PullToDismiss: NSObject {
         }
         
         proxy = nil
+        __scrollView?.delegate = nil
         __scrollView = nil
     }
     
@@ -190,6 +191,7 @@ open class PullToDismiss: NSObject {
         if originY > dismissableHeight {
             deleteBackgroundView()
             targetViewController?.view.detachEdgeShadow()
+            proxy = nil
             _ = dismissAction?() ?? dismiss()
         } else if originY != 0.0 {
             UIView.perform(.delete, on: [], options: [.allowUserInteraction], animations: { [weak self] in
