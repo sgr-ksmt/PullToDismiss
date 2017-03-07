@@ -132,7 +132,7 @@ open class PullToDismiss: NSObject {
             updateViewPosition(offset: diff)
             gesture.setTranslation(.zero, in: gesture.view)
         case .ended:
-          finishDragging(withVelocity: CGPoint.zero)
+          finishDragging(withVelocity: .zero)
         default:
             break
         }
