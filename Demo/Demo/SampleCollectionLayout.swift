@@ -14,8 +14,6 @@ class SampleCollectionLayout: UICollectionViewFlowLayout {
         minimumLineSpacing = 0
         minimumInteritemSpacing = 0
         sectionInset = .zero
-        let side = UIScreen.main.bounds.width / 4
-        itemSize = CGSize(width: side, height: side)
     }
     
     required init?(coder aDecoder: NSCoder) {

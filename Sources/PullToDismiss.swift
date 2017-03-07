@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-open class PullToDismiss: NSObject, UIScrollViewDelegate, UITableViewDelegate, UICollectionViewDelegate {
+open class PullToDismiss: NSObject {
     
     public struct Defaults {
         private init() {}
@@ -218,27 +218,18 @@ open class PullToDismiss: NSObject, UIScrollViewDelegate, UITableViewDelegate, U
         }
         return nil
     }
-    
-    // MARK: - delegates
-    
-//    public weak var scrollViewDelegate: UIScrollViewDelegate? {
-//        return delegateProxy as? UIScrollViewDelegate
-//    }
-//    
-//    public weak var tableViewDelegate: UITableViewDelegate? {
-//        return delegateProxy as? UITableViewDelegate
-//    }
-//    
-//    public weak var collectionViewDelegate: UICollectionViewDelegate? {
-//        return delegateProxy as? UICollectionViewDelegate
-//    }
-//    
-//    public weak var collectionViewDelegateFlowLayout: UICollectionViewDelegateFlowLayout? {
-//        return delegateProxy as? UICollectionViewDelegateFlowLayout
-//    }
 }
 
-extension PullToDismiss /*: UIScrollViewDelegate*/ {
+extension PullToDismiss: UITableViewDelegate {
+}
+
+extension PullToDismiss: UICollectionViewDelegate {
+}
+
+extension PullToDismiss: UICollectionViewDelegateFlowLayout {
+}
+
+extension PullToDismiss: UIScrollViewDelegate {
     public func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if dragging {
             let diff = -(scrollView.contentOffset.y - previousContentOffsetY)
@@ -248,60 +239,17 @@ extension PullToDismiss /*: UIScrollViewDelegate*/ {
             }
             previousContentOffsetY = scrollView.contentOffset.y
         }
-//        scrollViewDelegate?.scrollViewDidScroll?(scrollView)
     }
-    
-//    public func scrollViewDidZoom(_ scrollView: UIScrollView) {
-//        scrollViewDelegate?.scrollViewDidZoom?(scrollView)
-//    }
     
     public func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         startDragging()
         dragging = true
         previousContentOffsetY = scrollView.contentOffset.y
-//        scrollViewDelegate?.scrollViewWillBeginDragging?(scrollView)
-    }
-    
-    public func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-//        scrollViewDelegate?.scrollViewWillEndDragging?(scrollView, withVelocity: velocity, targetContentOffset: targetContentOffset)
     }
     
     public func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         finishDragging()
         dragging = false
         previousContentOffsetY = 0.0
-//        scrollViewDelegate?.scrollViewDidEndDragging?(scrollView, willDecelerate: decelerate)
-    }
-    
-//    public func scrollViewWillBeginDecelerating(_ scrollView: UIScrollView) {
-//        scrollViewDelegate?.scrollViewWillBeginDecelerating?(scrollView)
-//    }
-//    
-//    public func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-//        scrollViewDelegate?.scrollViewDidEndDecelerating?(scrollView)
-//    }
-//    
-//    public func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
-//        scrollViewDelegate?.scrollViewDidEndScrollingAnimation?(scrollView)
-//    }
-//    
-//    public func viewForZooming(in scrollView: UIScrollView) -> UIView? {
-//        return scrollViewDelegate?.viewForZooming?(in: scrollView)
-//    }
-//    
-//    public func scrollViewWillBeginZooming(_ scrollView: UIScrollView, with view: UIView?) {
-//        scrollViewDelegate?.scrollViewWillBeginZooming?(scrollView, with: view)
-//    }
-//    
-//    public func scrollViewDidEndZooming(_ scrollView: UIScrollView, with view: UIView?, atScale scale: CGFloat) {
-//        scrollViewDelegate?.scrollViewDidEndZooming?(scrollView, with: view, atScale: scale)
-//    }
-//    
-//    public func scrollViewShouldScrollToTop(_ scrollView: UIScrollView) -> Bool {
-//        return scrollViewDelegate?.scrollViewShouldScrollToTop?(scrollView) ?? true
-//    }
-//    
-//    public func scrollViewDidScrollToTop(_ scrollView: UIScrollView) {
-//        scrollViewDelegate?.scrollViewDidScrollToTop?(scrollView)
-//    }
+    }    
 }
