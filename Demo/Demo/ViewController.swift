@@ -15,6 +15,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet private weak var demoButton2: UIButton!
     @IBOutlet private weak var demoButton3: UIButton!
     @IBOutlet private weak var demoButton4: UIButton!
+    @IBOutlet private weak var demoButton5: UIButton!
     @IBOutlet private weak var backgroundSwitch: UISegmentedControl!
     @IBOutlet private weak var colorTextField: UITextField!
     @IBOutlet private weak var currentColorView: UIView!
@@ -27,7 +28,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let buttons: [UIButton] = [demoButton1, demoButton2, demoButton3, demoButton4]
+        let buttons: [UIButton] = [demoButton1, demoButton2, demoButton3, demoButton4, demoButton5]
         buttons.forEach {
             $0.layer.cornerRadius = $0.frame.height / 2
             $0.clipsToBounds = true
@@ -144,6 +145,8 @@ class ViewController: UIViewController, UITextFieldDelegate {
                     self?.blurSampleImageView.alpha = 1.0
                 })
                 return nav
+            case demoButton5:
+                return UINavigationController(rootViewController: SampleWebViewController())
             default:
                 fatalError()
             }
