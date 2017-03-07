@@ -7,11 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4D22AC5C1E6E36B20006EDA0 /* DelegateProxy.h in Headers */ = {isa = PBXBuildFile; fileRef = 4D22AC5A1E6E36B20006EDA0 /* DelegateProxy.h */; };
+		4D22AC5C1E6E36B20006EDA0 /* DelegateProxy.h in Headers */ = {isa = PBXBuildFile; fileRef = 4D22AC5A1E6E36B20006EDA0 /* DelegateProxy.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4D22AC5D1E6E36B20006EDA0 /* DelegateProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D22AC5B1E6E36B20006EDA0 /* DelegateProxy.m */; };
 		4D2F15C31DF2D570000A5172 /* BackgroundEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D2F15C21DF2D570000A5172 /* BackgroundEffect.swift */; };
 		4D5A35191DDB21DB00ED9D54 /* PullToDismiss.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D5A35181DDB21DB00ED9D54 /* PullToDismiss.swift */; };
 		4D5A351F1DDBF18B00ED9D54 /* PullToDismiss+Proxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D5A351E1DDBF18B00ED9D54 /* PullToDismiss+Proxy.swift */; };
+		4D63E6A01E6E38F100FEA3D0 /* ScrollViewDelegateProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D63E69F1E6E38F100FEA3D0 /* ScrollViewDelegateProxy.swift */; };
 		4D870AAB1DDAA0CD00575A28 /* PullToDismiss.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D870AA11DDAA0CD00575A28 /* PullToDismiss.framework */; };
 		4D870AB01DDAA0CD00575A28 /* PullToDismissTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D870AAF1DDAA0CD00575A28 /* PullToDismissTests.swift */; };
 		4D870AB21DDAA0CD00575A28 /* PullToDismiss.h in Headers */ = {isa = PBXBuildFile; fileRef = 4D870AA41DDAA0CD00575A28 /* PullToDismiss.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -36,6 +37,7 @@
 		4D2F15C21DF2D570000A5172 /* BackgroundEffect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackgroundEffect.swift; sourceTree = "<group>"; };
 		4D5A35181DDB21DB00ED9D54 /* PullToDismiss.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PullToDismiss.swift; sourceTree = "<group>"; };
 		4D5A351E1DDBF18B00ED9D54 /* PullToDismiss+Proxy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PullToDismiss+Proxy.swift"; sourceTree = "<group>"; };
+		4D63E69F1E6E38F100FEA3D0 /* ScrollViewDelegateProxy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScrollViewDelegateProxy.swift; sourceTree = "<group>"; };
 		4D870AA11DDAA0CD00575A28 /* PullToDismiss.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PullToDismiss.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4D870AA41DDAA0CD00575A28 /* PullToDismiss.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PullToDismiss.h; sourceTree = "<group>"; };
 		4D870AA51DDAA0CD00575A28 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -77,6 +79,7 @@
 				4DBDB7501E1F6FFA0068AA1F /* UIView+EdgeShadow.swift */,
 				4D22AC5A1E6E36B20006EDA0 /* DelegateProxy.h */,
 				4D22AC5B1E6E36B20006EDA0 /* DelegateProxy.m */,
+				4D63E69F1E6E38F100FEA3D0 /* ScrollViewDelegateProxy.swift */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -257,6 +260,7 @@
 				4D2F15C31DF2D570000A5172 /* BackgroundEffect.swift in Sources */,
 				4D22AC5D1E6E36B20006EDA0 /* DelegateProxy.m in Sources */,
 				4D9D97C51DF058C700C10C87 /* CustomBlurView.swift in Sources */,
+				4D63E6A01E6E38F100FEA3D0 /* ScrollViewDelegateProxy.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -396,6 +400,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "-.PullToDismiss";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0.1;
 			};
@@ -417,6 +422,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "-.PullToDismiss";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_VERSION = 3.0.1;
 			};
 			name = Release;
