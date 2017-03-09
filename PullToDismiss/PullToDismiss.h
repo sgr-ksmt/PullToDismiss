@@ -15,5 +15,6 @@ FOUNDATION_EXPORT double PullToDismissVersionNumber;
 FOUNDATION_EXPORT const unsigned char PullToDismissVersionString[];
 
 // In this header, you should import all the public headers of your framework using statements like #import <PullToDismiss/PublicHeader.h>
+#import "DelegateProxy.h"
 
 

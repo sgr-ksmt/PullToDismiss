@@ -24,7 +24,7 @@ class SampleCustomViewController: UIViewController {
         pullToDismiss = PullToDismiss(scrollView: tableView, viewController: self, navigationBar: coverView)
         Config.shared.adaptSetting(pullToDismiss: pullToDismiss)
         tableView.dataSource = self
-        pullToDismiss?.delegateProxy = self
+        pullToDismiss?.delegate = self
     }
     
     @IBAction func close(_: UIButton) {
