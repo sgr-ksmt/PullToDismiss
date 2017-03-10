@@ -25,6 +25,9 @@ PullToDismiss provides dismiss modal viewcontroller function like Facebook Messe
 - Automatically add pan gesture to navigation bar.
 - Blur effect support.
 
+### Migration guide
+If you update from 1.x to 2.0, see [migration guide](Documents/PullToDismiss2MigrationGuide.md) if needed.
+
 ## Usage
 ### Getting Started
 (1) Setup `PullToDismiss`
