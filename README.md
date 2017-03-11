@@ -1,11 +1,11 @@
 # PullToDismiss
-PullToDismiss provides dismiss modal viewcontroller function by pulling scrollview or navigationbar with smooth and rich background effect.  
+PullToDismiss provides dismiss modal viewcontroller function like Facebook Messenger by pulling scrollview or navigationbar with smooth and rich background effect.  
 
 [![GitHub release](https://img.shields.io/github/release/sgr-ksmt/PullToDismiss.svg)](https://github.com/sgr-ksmt/PullToDismiss/releases)
 ![Language](https://img.shields.io/badge/language-Swift%203-orange.svg)
 [![Carthage Compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![CocoaPods](https://img.shields.io/badge/Cocoa%20Pods-✓-4BC51D.svg?style=flat)](https://cocoapods.org/pods/PullToDismiss)
-[![CocoaPodsDL](https://img.shields.io/cocoapods/dt/PullToDismiss.svg)]()
+[![CocoaPodsDL](https://img.shields.io/cocoapods/dt/PullToDismiss.svg)](https://cocoapods.org/pods/PullToDismiss)
 [![Awesome](https://cdn.rawgit.com/sindresorhus/awesome/d7305f38d29fed78fa85652e3a63e154dd8e8829/media/badge.svg)](https://github.com/matteocrippa/awesome-swift#ui)  
 
 
@@ -19,12 +19,14 @@ PullToDismiss provides dismiss modal viewcontroller function by pulling scrollvi
 - [Appetize.io Demo](https://appetize.io/app/hett44vca458r9artkbq0awxrc?device=iphone7&scale=75&orientation=portrait&osVersion=10.0)
 
 ## Feature
-- Easy to use!
-- Support all scroll views. (UIScrollView, UITableView, UICollectionView)
+- Support all scroll views. (UIScrollView, UITableView, UICollectionView, UIWebView, WKWebView)
 - Customizable. (dismiss background color, alpha, height percentage of dismiss)
 - Available in UIViewController, UINavigationController.
 - Automatically add pan gesture to navigation bar.
 - Blur effect support.
+
+### Migration guide
+If you update from 1.x to 2.0, see [migration guide](Documents/PullToDismiss2MigrationGuide.md) if needed.
 
 ## Usage
 ### Getting Started
@@ -58,7 +60,7 @@ self.present(nav, animated: true, completion: nil)
 
 ### Use `(UIScrollView|UITableView|UICollectionView)Delegate`
 
-If you want to use delegate, set `delegateProxy`.
+You can use all scroll view's delegate by set `pullToDismiss.delegate`.
 
 ```swift
 import PullToDismiss
@@ -69,56 +71,19 @@ class SampleViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         pullToDismiss = PullToDismiss(scrollView: tableView)
-        pullToDismiss.delegateProxy = self
+        pullToDismiss?.delegate = self
     }
 }
 
 extension SampleViewController: UITableViewDelegate {
-    // called by PullToDismiss
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         // ...
     }
 
-    // called by PullToDismiss
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // ...
     }
 }
-```
-
-#### Advanced
-PullToDismiss defines major `UIScrollView|UITableView|UICollectionViewDelegate` methods.  
-But some delegate method aren't defined.  
-If you want to use other methods, override PullToDismiss and define delegate method you want to.
-
-```swift
-import PullToDismiss
-
-class CustomPullToDismiss: PullToDismiss {
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return tableViewDelegate?.tableView?(tableView, heightForRowAt: indexPath) ?? 44.0
-    }
-}
-
-class SampleViewController: UIViewController {
-    @IBOutlet private weak var tableView: UITableView!
-    private var pullToDismiss: PullToDismiss?
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        pullToDismiss = CustomPullToDismiss(scrollView: tableView)
-        pullToDismiss.delegateProxy = self
-    }
-}
-
-extension SampleViewController: UITableViewDelegate {
-    // called by CustomPullToDismiss
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return indexPath.section == 0 ? 44.0 : 60.0
-    }
-
-    // ...
-}
-
 ```
 
 ### Customize
@@ -170,7 +135,7 @@ pullToDismiss?.dismissableHeightPercentage = 0.5
 - Add the following to your *Cartfile*:
 
 ```bash
-github "sgr-ksmt/PullToDismiss" ~> 1.0
+github "sgr-ksmt/PullToDismiss" ~> 2.0
 ```
 
 - Run `carthage update`
@@ -184,7 +149,7 @@ github "sgr-ksmt/PullToDismiss" ~> 1.0
 it, simply add the following line to your Podfile:
 
 ```ruby
-pod 'PullToDismiss' ~> 1.0
+pod 'PullToDismiss', '~> 2.0'
 ```
 
 and run `pod install`
