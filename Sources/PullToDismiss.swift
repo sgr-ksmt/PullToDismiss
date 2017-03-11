@@ -253,6 +253,5 @@ extension PullToDismiss: UIScrollViewDelegate {
         finishDragging(withVelocity: velocity)
         dragging = false
         previousContentOffsetY = 0.0
-        scrollViewDelegate?.scrollViewWillEndDragging?(scrollView, withVelocity: velocity, targetContentOffset: targetContentOffset)
     }
 }
