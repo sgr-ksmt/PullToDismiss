@@ -30,7 +30,7 @@ class SampleTableViewController: UITableViewController {
         pullToDismiss?.dismissAction = { [weak self] in
             self?.dismiss(nil)
         }
-        pullToDismiss?.delegateProxy = self
+        pullToDismiss?.delegate = self
     }
     
     var disissBlock: (() -> Void)?
@@ -60,7 +60,6 @@ class SampleTableViewController: UITableViewController {
     }
     
     override func scrollViewDidScroll(_ scrollView: UIScrollView) {
-//        print("\(scrollView.contentOffset.y)")
-    }
-    
+        print("\(scrollView.contentOffset.y)")
+    }    
 }

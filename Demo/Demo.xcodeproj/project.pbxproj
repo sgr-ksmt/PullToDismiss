@@ -15,6 +15,7 @@
 		4D5A351C1DDB21F100ED9D54 /* PullToDismiss.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4D5A351A1DDB21F100ED9D54 /* PullToDismiss.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4D5A35211DDBFD7200ED9D54 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D5A35201DDBFD7200ED9D54 /* Config.swift */; };
 		4D9D97C91DF0751400C10C87 /* img.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 4D9D97C81DF0751400C10C87 /* img.jpg */; };
+		4DB1C4991E6EF167008103D1 /* SampleWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DB1C4981E6EF167008103D1 /* SampleWebViewController.swift */; };
 		4DC885401DDDF13200B282FB /* SampleTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DC8853F1DDDF13200B282FB /* SampleTableViewController.swift */; };
 		4DDE88051DDAA1DC00154B59 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DDE88041DDAA1DC00154B59 /* AppDelegate.swift */; };
 		4DDE88071DDAA1DC00154B59 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DDE88061DDAA1DC00154B59 /* ViewController.swift */; };
@@ -46,6 +47,7 @@
 		4D5A351A1DDB21F100ED9D54 /* PullToDismiss.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = PullToDismiss.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4D5A35201DDBFD7200ED9D54 /* Config.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		4D9D97C81DF0751400C10C87 /* img.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = img.jpg; sourceTree = "<group>"; };
+		4DB1C4981E6EF167008103D1 /* SampleWebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SampleWebViewController.swift; sourceTree = "<group>"; };
 		4DC8853F1DDDF13200B282FB /* SampleTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SampleTableViewController.swift; sourceTree = "<group>"; };
 		4DDE88011DDAA1DC00154B59 /* Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Demo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4DDE88041DDAA1DC00154B59 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -103,6 +105,7 @@
 				4D19BAD51DDDE49A0027383B /* SampleCollectionLayout.swift */,
 				4D19BAD71DDDE8050027383B /* SampleCustomViewController.swift */,
 				4D19BAD91DDDE80F0027383B /* SampleCustomViewController.storyboard */,
+				4DB1C4981E6EF167008103D1 /* SampleWebViewController.swift */,
 			);
 			path = Demo;
 			sourceTree = "<group>";
@@ -188,6 +191,7 @@
 				4DE54A291DDD4B4100568F7B /* UIColor+Hex.swift in Sources */,
 				4DDE88051DDAA1DC00154B59 /* AppDelegate.swift in Sources */,
 				4D19BAD41DDDE1DD0027383B /* SampleCollectionViewController.swift in Sources */,
+				4DB1C4991E6EF167008103D1 /* SampleWebViewController.swift in Sources */,
 				4D19BAD81DDDE8050027383B /* SampleCustomViewController.swift in Sources */,
 				4D5A35211DDBFD7200ED9D54 /* Config.swift in Sources */,
 				4DC885401DDDF13200B282FB /* SampleTableViewController.swift in Sources */,

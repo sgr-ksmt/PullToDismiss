@@ -28,7 +28,7 @@ class SampleCollectionViewController: UICollectionViewController {
         navigationController?.navigationBar.setValue(UIBarPosition.topAttached.rawValue, forKey: "barPosition")
         pullToDismiss = PullToDismiss(scrollView: collectionView!)
         Config.shared.adaptSetting(pullToDismiss: pullToDismiss)
-        pullToDismiss?.delegateProxy = self
+        pullToDismiss?.delegate = self
         view.backgroundColor = .white
     }
 
@@ -51,5 +51,11 @@ class SampleCollectionViewController: UICollectionViewController {
         alert.addAction(UIAlertAction(title: "ok", style: .default, handler: nil))
         self.present(alert, animated: true, completion: nil)
     }
+}
 
+extension SampleCollectionViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let side = UIScreen.main.bounds.width / 6
+        return CGSize(width: side, height: side)
+    }
 }
