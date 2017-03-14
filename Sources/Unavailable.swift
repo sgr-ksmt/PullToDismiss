@@ -8,7 +8,7 @@
 
 import Foundation
 
-extension PullToDismiss {
+public extension PullToDismiss {
     @available(*, unavailable, renamed: "delegate")
     public weak var delegateProxy: AnyObject? {
         fatalError("\(#function) is no longer available")

@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-open class PullToDismiss: NSObject {
+@objc open class PullToDismiss: NSObject {
 
     public struct Defaults {
         private init() {}
