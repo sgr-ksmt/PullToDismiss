@@ -24,6 +24,7 @@ PullToDismiss provides dismiss modal viewcontroller function like Facebook Messe
 - Available in UIViewController, UINavigationController.
 - Automatically add pan gesture to navigation bar.
 - Blur effect support.
+- **Objective-C support.** (from *v2.1~*)
 
 ### Migration guide
 If you update from 1.x to 2.0, see [migration guide](Documents/PullToDismiss2MigrationGuide.md) if needed.
