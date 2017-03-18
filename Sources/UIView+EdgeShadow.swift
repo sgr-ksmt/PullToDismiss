@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-extension UIView {
+public extension UIView {
     func applyEdgeShadow(_ shadow: EdgeShadow?) {
         guard let shadow = shadow else {
             detachEdgeShadow()

@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class ScrollViewDelegateProxy: DelegateProxy, UIScrollViewDelegate {
+@objc class ScrollViewDelegateProxy: DelegateProxy, UIScrollViewDelegate {
     @nonobjc convenience init(delegates: [UIScrollViewDelegate]) {
         self.init(__delegates: delegates)
     }

@@ -8,7 +8,7 @@
 
 import Foundation
 
-public protocol BackgroundEffect {
+@objc public protocol BackgroundEffect {
     var color: UIColor? { get set }
     var alpha: CGFloat { get set }
     var target: BackgroundTarget { get }
@@ -21,12 +21,12 @@ public protocol BackgroundEffect {
 ///
 /// - targetViewController: add background view to target viewcontroller
 /// - presentingViewController: add background view to target viewcontroller's presenting viewcontroller
-public enum BackgroundTarget {
+@objc public enum BackgroundTarget : NSInteger {
     case targetViewController
     case presentingViewController
 }
 
-public struct ShadowEffect: BackgroundEffect {
+@objc public class ShadowEffect: NSObject, BackgroundEffect {
     public var color: UIColor?
     public var alpha: CGFloat
     public var target: BackgroundTarget = .targetViewController
@@ -51,7 +51,7 @@ public struct ShadowEffect: BackgroundEffect {
 }
 
 @available(iOS, introduced: 9.0)
-public struct BlurEffect: BackgroundEffect {
+@objc public class BlurEffect: NSObject, BackgroundEffect {
     public var color: UIColor?
     public var alpha: CGFloat
     public var blurRadius: CGFloat
