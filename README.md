@@ -24,6 +24,7 @@ PullToDismiss provides dismiss modal viewcontroller function like Facebook Messe
 - Available in UIViewController, UINavigationController.
 - Automatically add pan gesture to navigation bar.
 - Blur effect support.
+- **Objective-C support.** (from *v2.1~*)
 
 ### Migration guide
 If you update from 1.x to 2.0, see [migration guide](Documents/PullToDismiss2MigrationGuide.md) if needed.
@@ -135,7 +136,7 @@ pullToDismiss?.dismissableHeightPercentage = 0.5
 - Add the following to your *Cartfile*:
 
 ```bash
-github "sgr-ksmt/PullToDismiss" ~> 2.0
+github "sgr-ksmt/PullToDismiss" ~> 2.1
 ```
 
 - Run `carthage update`
@@ -149,7 +150,7 @@ github "sgr-ksmt/PullToDismiss" ~> 2.0
 it, simply add the following line to your Podfile:
 
 ```ruby
-pod 'PullToDismiss', '~> 2.0'
+pod 'PullToDismiss', '~> 2.1'
 ```
 
 and run `pod install`

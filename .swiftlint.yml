@@ -15,7 +15,8 @@ disabled_rules:
 - line_length
 - force_try
 - vertical_whitespace
-  
+- redundant_string_enum_value
+
 force_try: warning
 
 line_length: 150

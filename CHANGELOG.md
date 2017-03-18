@@ -1,4 +1,9 @@
 # CHANGELOG
+### v2.1
+- Added HouncCI for linting swift code. #33
+- Fixed minor bugs. #35
+- Added support for Objective-C #36
+
 ### v2.0
 - Realistic animation like Facebook Messenger #24, #26
 - Redesign of ProxyDelegate #25, #27
