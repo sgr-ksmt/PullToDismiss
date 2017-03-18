@@ -16,6 +16,7 @@
 		4D2D09F91E7A6B5400EEF278 /* PullToDismiss.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D2D09F81E7A6B5400EEF278 /* PullToDismiss.framework */; };
 		4D2D09FA1E7A6B5400EEF278 /* PullToDismiss.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4D2D09F81E7A6B5400EEF278 /* PullToDismiss.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4D2D0A011E7A6C3200EEF278 /* SampleTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D2D0A001E7A6C3200EEF278 /* SampleTableViewController.m */; };
+		4D871A591E7CFFE800DE0C35 /* CustomShadowEffect.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D871A581E7CFFE800DE0C35 /* CustomShadowEffect.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -46,6 +47,8 @@
 		4D2D09F81E7A6B5400EEF278 /* PullToDismiss.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = PullToDismiss.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4D2D09FF1E7A6C3200EEF278 /* SampleTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SampleTableViewController.h; sourceTree = "<group>"; };
 		4D2D0A001E7A6C3200EEF278 /* SampleTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SampleTableViewController.m; sourceTree = "<group>"; };
+		4D871A571E7CFFE800DE0C35 /* CustomShadowEffect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomShadowEffect.h; sourceTree = "<group>"; };
+		4D871A581E7CFFE800DE0C35 /* CustomShadowEffect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomShadowEffect.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,6 +89,8 @@
 				4D2D09E81E7A6A0700EEF278 /* ViewController.m */,
 				4D2D09FF1E7A6C3200EEF278 /* SampleTableViewController.h */,
 				4D2D0A001E7A6C3200EEF278 /* SampleTableViewController.m */,
+				4D871A571E7CFFE800DE0C35 /* CustomShadowEffect.h */,
+				4D871A581E7CFFE800DE0C35 /* CustomShadowEffect.m */,
 				4D2D09EA1E7A6A0700EEF278 /* Main.storyboard */,
 				4D2D09ED1E7A6A0700EEF278 /* Assets.xcassets */,
 				4D2D09EF1E7A6A0700EEF278 /* LaunchScreen.storyboard */,
@@ -177,6 +182,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4D2D09E91E7A6A0700EEF278 /* ViewController.m in Sources */,
+				4D871A591E7CFFE800DE0C35 /* CustomShadowEffect.m in Sources */,
 				4D2D09E61E7A6A0700EEF278 /* AppDelegate.m in Sources */,
 				4D2D09E31E7A6A0700EEF278 /* main.m in Sources */,
 				4D2D0A011E7A6C3200EEF278 /* SampleTableViewController.m in Sources */,

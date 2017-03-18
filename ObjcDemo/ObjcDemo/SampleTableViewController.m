@@ -8,6 +8,7 @@
 
 #import "SampleTableViewController.h"
 @import PullToDismiss;
+#import "CustomShadowEffect.h"
 
 @interface SampleTableViewController ()
 @property(nonatomic, nullable) PullToDismiss *pullToDismiss;
@@ -22,7 +23,10 @@
     
     self.pullToDismiss.edgeShadow = [EdgeShadow defaultEdgeShadow];
     self.pullToDismiss.delegate = self;
-    self.pullToDismiss.backgroundEffect = [BlurEffect lightBlurEffect];
+    CustomShadowEffect *effect = [[CustomShadowEffect alloc] init];
+    effect.alpha = 0.5;
+    effect.color = [UIColor purpleColor];
+    self.pullToDismiss.backgroundEffect = effect;
     self.pullToDismiss.dismissableHeightPercentage = 0.5f;
     __weak typeof(self) wSelf = self;
     self.pullToDismiss.dismissAction = ^{
