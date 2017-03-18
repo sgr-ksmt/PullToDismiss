@@ -7,8 +7,9 @@
 //
 
 import Foundation
+import UIKit
 
-public protocol BackgroundEffect {
+@objc public protocol BackgroundEffect: NSObjectProtocol {
     var color: UIColor? { get set }
     var alpha: CGFloat { get set }
     var target: BackgroundTarget { get }
@@ -21,22 +22,30 @@ public protocol BackgroundEffect {
 ///
 /// - targetViewController: add background view to target viewcontroller
 /// - presentingViewController: add background view to target viewcontroller's presenting viewcontroller
-public enum BackgroundTarget {
+@objc public enum BackgroundTarget: Int {
     case targetViewController
     case presentingViewController
 }
 
-public struct ShadowEffect: BackgroundEffect {
+public final class ShadowEffect: NSObject, BackgroundEffect {
     public var color: UIColor?
     public var alpha: CGFloat
     public var target: BackgroundTarget = .targetViewController
 
-    public static var `default`: ShadowEffect = ShadowEffect(color: .black, alpha: 0.8)
+    @objc(defaultShadowEffedt)
+    public static let `default`: ShadowEffect = ShadowEffect(color: .black, alpha: 0.8)
     
     public init(color: UIColor?, alpha: CGFloat) {
         self.color = color
         self.alpha = alpha
     }
+    
+    // only Objective-C
+    @available(*, unavailable)
+    public class func shadowEffect(color: UIColor?, alpha: CGFloat) -> ShadowEffect {
+        return ShadowEffect(color: color, alpha: alpha)
+    }
+    
     
     public func makeBackgroundView() -> UIView {
         let view = UIView(frame: .zero)
@@ -51,7 +60,7 @@ public struct ShadowEffect: BackgroundEffect {
 }
 
 @available(iOS, introduced: 9.0)
-public struct BlurEffect: BackgroundEffect {
+public final class BlurEffect: NSObject, BackgroundEffect {
     public var color: UIColor?
     public var alpha: CGFloat
     public var blurRadius: CGFloat
@@ -59,28 +68,32 @@ public struct BlurEffect: BackgroundEffect {
 
     public var target: BackgroundTarget = .presentingViewController
 
-    public static var `default`: BlurEffect = BlurEffect(
+    @objc(defaultBlur)
+    public static let `default`: BlurEffect = BlurEffect(
         color: nil,
         alpha: 0.0,
         blurRadius: 20.0,
         saturationDeltaFactor: 1.8
     )
     
-    public static var extraLight: BlurEffect = BlurEffect(
+    @objc(extraLightBlurEffect)
+    public static let extraLight: BlurEffect = BlurEffect(
         color: UIColor(white: 0.97, alpha: 0.82),
         alpha: 1.0,
         blurRadius: 20.0,
         saturationDeltaFactor: 1.8
     )
     
-    public static var light: BlurEffect = BlurEffect(
+    @objc(lightBlurEffect)
+    public static let light: BlurEffect = BlurEffect(
         color: UIColor(white: 1.0, alpha: 0.3),
         alpha: 1.0,
         blurRadius: 30.0,
         saturationDeltaFactor: 1.8
     )
     
-    public static var dark: BlurEffect = BlurEffect(
+    @objc(darkBlurEffect)
+    public static let dark: BlurEffect = BlurEffect(
         color: UIColor(white: 0.11, alpha: 0.73),
         alpha: 1.0,
         blurRadius: 20.0,
@@ -94,6 +107,11 @@ public struct BlurEffect: BackgroundEffect {
         self.saturationDeltaFactor = saturationDeltaFactor
     }
 
+    // only Objective-C
+    @available(*, unavailable)
+    public class func blurEffect(color: UIColor?, alpha: CGFloat, blurRadius: CGFloat, saturationDeltaFactor: CGFloat) -> BlurEffect {
+        return BlurEffect(color: color, alpha: alpha, blurRadius: blurRadius, saturationDeltaFactor: saturationDeltaFactor)
+    }
     
     public func makeBackgroundView() -> UIView {
         let view = CustomBlurView(radius: blurRadius)
