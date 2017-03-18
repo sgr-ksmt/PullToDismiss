@@ -20,6 +20,7 @@
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"Cell"];
     self.pullToDismiss = [[PullToDismiss alloc] initWithScrollView:self.tableView];
     
+    self.pullToDismiss.edgeShadow = [EdgeShadow defaultEdgeShadow];
     self.pullToDismiss.delegate = self;
     self.pullToDismiss.dismissableHeightPercentage = 0.5f;
     __weak typeof(self) wSelf = self;
