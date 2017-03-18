@@ -136,7 +136,7 @@ pullToDismiss?.dismissableHeightPercentage = 0.5
 - Add the following to your *Cartfile*:
 
 ```bash
-github "sgr-ksmt/PullToDismiss" ~> 2.0
+github "sgr-ksmt/PullToDismiss" ~> 2.1
 ```
 
 - Run `carthage update`
@@ -150,7 +150,7 @@ github "sgr-ksmt/PullToDismiss" ~> 2.0
 it, simply add the following line to your Podfile:
 
 ```ruby
-pod 'PullToDismiss', '~> 2.0'
+pod 'PullToDismiss', '~> 2.1'
 ```
 
 and run `pod install`
