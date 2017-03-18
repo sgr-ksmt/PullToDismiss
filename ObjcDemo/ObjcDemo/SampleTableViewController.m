@@ -22,6 +22,7 @@
     
     self.pullToDismiss.edgeShadow = [EdgeShadow defaultEdgeShadow];
     self.pullToDismiss.delegate = self;
+    self.pullToDismiss.backgroundEffect = [BlurEffect lightBlurEffect];
     self.pullToDismiss.dismissableHeightPercentage = 0.5f;
     __weak typeof(self) wSelf = self;
     self.pullToDismiss.dismissAction = ^{
