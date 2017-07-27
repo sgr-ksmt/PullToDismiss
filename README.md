@@ -97,7 +97,7 @@ You can customize backgroundEffect, dismissableHeightPercentage:
 ![img1](Documents/img1.png)
 
 ```swift
-pullToDismiss?.background = ShadowEffect(color: .red, alpha: 0.5) // color: red, alpha: 0.5
+pullToDismiss?.backgroundEffect = ShadowEffect(color: .red, alpha: 0.5) // color: red, alpha: 0.5
 ```
 
 #### Blur background effect
@@ -107,10 +107,10 @@ New feature for v1.0.
 
 ```swift
 // preset blur (.extraLight, .light, .dark)
-pullToDismiss?.background = BlurEffect.extraLight
+pullToDismiss?.backgroundEffect = BlurEffect.extraLight
 
 // set custom Blur
-pullToDismiss?.background = BlurEffect(color: .red, alpha: 0.5, blurRadius: 40.0, saturationDeltaFactor: 1.8)
+pullToDismiss?.backgroundEffect = BlurEffect(color: .red, alpha: 0.5, blurRadius: 40.0, saturationDeltaFactor: 1.8)
 ```
 
 #### dismissableHeightPercentage
