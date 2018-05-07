@@ -215,9 +215,14 @@ open class PullToDismiss: NSObject {
     private static func viewControllerFromScrollView(_ scrollView: UIScrollView) -> UIViewController? {
         var responder: UIResponder? = scrollView
         while let r = responder {
-            if let viewController = r as? UIViewController {
+            if var viewController = r as? UIViewController {
+                while let parent = viewController.parent {
+                    viewController = parent
+                }
+
                 return viewController
             }
+
             responder = r.next
         }
         return nil
