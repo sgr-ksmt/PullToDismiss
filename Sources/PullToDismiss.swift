@@ -19,7 +19,10 @@ open class PullToDismiss: NSObject {
     open var backgroundEffect: BackgroundEffect? = ShadowEffect.default
     open var edgeShadow: EdgeShadow? = EdgeShadow.default
 
+    public var beginDismissAction: (() -> Void)?
     public var dismissAction: (() -> Void)?
+    public var endDismissAction: (() -> Void)?
+
     public weak var delegate: UIScrollViewDelegate? {
         didSet {
             var delegates: [UIScrollViewDelegate] = [self]
@@ -29,6 +32,7 @@ open class PullToDismiss: NSObject {
             proxy = ScrollViewDelegateProxy(delegates: delegates)
         }
     }
+
     public var dismissableHeightPercentage: CGFloat = Defaults.dismissableHeightPercentage {
         didSet {
             dismissableHeightPercentage = min(max(0.0, dismissableHeightPercentage), 1.0)
@@ -165,6 +169,7 @@ open class PullToDismiss: NSObject {
         if haveShadowEffect {
             targetViewController?.view.clipsToBounds = false
         }
+        beginDismissAction?()
     }
 
     fileprivate func updateViewPosition(offset: CGFloat) {
@@ -210,6 +215,7 @@ open class PullToDismiss: NSObject {
             self.deleteBackgroundView()
         }
         viewPositionY = 0.0
+        endDismissAction?()
     }
 
     private static func viewControllerFromScrollView(_ scrollView: UIScrollView) -> UIViewController? {
