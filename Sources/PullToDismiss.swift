@@ -38,7 +38,7 @@ open class PullToDismiss: NSObject {
     }
     public var dismissibleVelocityThreshold: CGFloat = Defaults.dismissibleVelocityThreshold {
         didSet {
-            dismissibleVelocityThreshold = min(max(0, dismissibleVelocityThreshold), 1.0)
+            dismissibleVelocityThreshold = max(0, dismissibleVelocityThreshold)
         }
     }
 
