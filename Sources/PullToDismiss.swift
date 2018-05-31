@@ -13,13 +13,17 @@ open class PullToDismiss: NSObject {
 
     public struct Defaults {
         private init() {}
-        public static let dismissableHeightPercentage: CGFloat = 0.33
+        public static let dismissibleHeightPercentage: CGFloat = 0.33
+        public static let dismissibleVelocityThreshold: CGFloat = 0
     }
 
     open var backgroundEffect: BackgroundEffect? = ShadowEffect.default
     open var edgeShadow: EdgeShadow? = EdgeShadow.default
 
+    public var beginDismissAction: (() -> Void)?
     public var dismissAction: (() -> Void)?
+    public var endDismissAction: (() -> Void)?
+
     public weak var delegate: UIScrollViewDelegate? {
         didSet {
             var delegates: [UIScrollViewDelegate] = [self]
@@ -29,9 +33,15 @@ open class PullToDismiss: NSObject {
             proxy = ScrollViewDelegateProxy(delegates: delegates)
         }
     }
-    public var dismissableHeightPercentage: CGFloat = Defaults.dismissableHeightPercentage {
+
+    public var dismissibleHeightPercentage: CGFloat = Defaults.dismissibleHeightPercentage {
         didSet {
-            dismissableHeightPercentage = min(max(0.0, dismissableHeightPercentage), 1.0)
+            dismissibleHeightPercentage = min(max(0.0, dismissibleHeightPercentage), 1.0)
+        }
+    }
+    public var dismissibleVelocityThreshold: CGFloat = Defaults.dismissibleVelocityThreshold {
+        didSet {
+            dismissibleVelocityThreshold = max(0, dismissibleVelocityThreshold)
         }
     }
 
@@ -165,6 +175,7 @@ open class PullToDismiss: NSObject {
         if haveShadowEffect {
             targetViewController?.view.clipsToBounds = false
         }
+        beginDismissAction?()
     }
 
     fileprivate func updateViewPosition(offset: CGFloat) {
@@ -181,7 +192,7 @@ open class PullToDismiss: NSObject {
 
         let targetViewOriginY: CGFloat = targetViewController?.view.frame.origin.y ?? 0.0
         let targetViewHeight: CGFloat = targetViewController?.view.frame.height ?? 0.0
-        let rate: CGFloat = (1.0 - (targetViewOriginY / (targetViewHeight * dismissableHeightPercentage)))
+        let rate: CGFloat = (1.0 - (targetViewOriginY / (targetViewHeight * dismissibleHeightPercentage)))
 
         updateBackgroundView(rate: rate)
         targetViewController?.view.updateEdgeShadow(edgeShadow, rate: rate)
@@ -189,8 +200,8 @@ open class PullToDismiss: NSObject {
 
     fileprivate func finishDragging(withVelocity velocity: CGPoint) {
         let originY = targetViewController?.view.frame.origin.y ?? 0.0
-        let dismissableHeight = (targetViewController?.view.frame.height ?? 0.0) * dismissableHeightPercentage
-        if originY > dismissableHeight || originY > 0 && velocity.y < 0 {
+        let dismissibleHeight = (targetViewController?.view.frame.height ?? 0.0) * dismissibleHeightPercentage
+        if originY > dismissibleHeight || originY > 0 && velocity.y < dismissibleVelocityThreshold {
             deleteBackgroundView()
             targetViewController?.view.detachEdgeShadow()
             proxy = nil
@@ -210,14 +221,20 @@ open class PullToDismiss: NSObject {
             self.deleteBackgroundView()
         }
         viewPositionY = 0.0
+        endDismissAction?()
     }
 
     private static func viewControllerFromScrollView(_ scrollView: UIScrollView) -> UIViewController? {
         var responder: UIResponder? = scrollView
         while let r = responder {
-            if let viewController = r as? UIViewController {
+            if var viewController = r as? UIViewController {
+                while let parent = viewController.parent {
+                    viewController = parent
+                }
+
                 return viewController
             }
+
             responder = r.next
         }
         return nil
