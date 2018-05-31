@@ -14,6 +14,7 @@ open class PullToDismiss: NSObject {
     public struct Defaults {
         private init() {}
         public static let dismissableHeightPercentage: CGFloat = 0.33
+        public static let dismissableVelocityThreshold: CGFloat = 0
     }
 
     open var backgroundEffect: BackgroundEffect? = ShadowEffect.default
@@ -29,9 +30,15 @@ open class PullToDismiss: NSObject {
             proxy = ScrollViewDelegateProxy(delegates: delegates)
         }
     }
+
     public var dismissableHeightPercentage: CGFloat = Defaults.dismissableHeightPercentage {
         didSet {
             dismissableHeightPercentage = min(max(0.0, dismissableHeightPercentage), 1.0)
+        }
+    }
+    public var dismissableVelocityThreshold: CGFloat = Defaults.dismissableVelocityThreshold {
+        didSet {
+            dismissableVelocityThreshold = min(max(0, dismissableVelocityThreshold), 1.0)
         }
     }
 
@@ -190,7 +197,7 @@ open class PullToDismiss: NSObject {
     fileprivate func finishDragging(withVelocity velocity: CGPoint) {
         let originY = targetViewController?.view.frame.origin.y ?? 0.0
         let dismissableHeight = (targetViewController?.view.frame.height ?? 0.0) * dismissableHeightPercentage
-        if originY > dismissableHeight || originY > 0 && velocity.y < 0 {
+        if originY > dismissableHeight || originY > 0 && velocity.y < dismissableVelocityThreshold {
             deleteBackgroundView()
             targetViewController?.view.detachEdgeShadow()
             proxy = nil
