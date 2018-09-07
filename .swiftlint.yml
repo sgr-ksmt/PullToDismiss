@@ -16,7 +16,7 @@ disabled_rules:
 - force_try
 - vertical_whitespace
 - redundant_string_enum_value
-
+- large_tuple
 force_try: warning
 
 line_length: 150
