@@ -61,7 +61,7 @@ class CustomBlurView: UIVisualEffectView {
         super.init(effect: self.blurEffect)
     }
     
-    public init(style: UIBlurEffectStyle) {
+    public init(style: UIBlurEffect.Style) {
         super.init(effect: self.blurEffect)
         switch style {
         case .light:
