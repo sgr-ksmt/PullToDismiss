@@ -110,7 +110,7 @@ open class PullToDismiss: NSObject {
         switch backgroundEffect.target {
         case .targetViewController:
             targetViewController?.view.addSubview(backgroundView)
-            backgroundView.superview?.sendSubview(toBack: backgroundView)
+            backgroundView.superview?.sendSubviewToBack(backgroundView)
             backgroundView.frame = targetViewController?.view.bounds ?? .zero
         case .presentingViewController:
             targetViewController?.presentingViewController?.view.addSubview(backgroundView)
