@@ -1,4 +1,8 @@
 # CHANGELOG
+
+### v2.2
+- Swift 5 Support #59
+
 ### v2.1
 - Added HouncCI for linting swift code. #33
 - Fixed minor bugs. #35

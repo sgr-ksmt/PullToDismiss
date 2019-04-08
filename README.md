@@ -2,7 +2,7 @@
 PullToDismiss provides dismiss modal viewcontroller function like Facebook Messenger by pulling scrollview or navigationbar with smooth and rich background effect.  
 
 [![GitHub release](https://img.shields.io/github/release/sgr-ksmt/PullToDismiss.svg)](https://github.com/sgr-ksmt/PullToDismiss/releases)
-![Language](https://img.shields.io/badge/language-Swift%203-orange.svg)
+![Language](https://img.shields.io/badge/language-Swift%205.0-orange.svg)
 [![Carthage Compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![CocoaPods](https://img.shields.io/badge/Cocoa%20Pods-✓-4BC51D.svg?style=flat)](https://cocoapods.org/pods/PullToDismiss)
 [![CocoaPodsDL](https://img.shields.io/cocoapods/dt/PullToDismiss.svg)](https://cocoapods.org/pods/PullToDismiss)
@@ -13,7 +13,7 @@ PullToDismiss provides dismiss modal viewcontroller function like Facebook Messe
 <br />
 
 |            sample            |            blur sample            |
-|:----------------------------:|:---------------------------------:|
+| :--------------------------: | :-------------------------------: |
 | ![gif](Documents/sample.gif) | ![gif](Documents/blur_sample.gif) |
 
 
@@ -137,7 +137,10 @@ pullToDismiss?.dismissableHeightPercentage = 0.5
 - Add the following to your *Cartfile*:
 
 ```bash
-github "sgr-ksmt/PullToDismiss" ~> 2.1
+# Swift 5.0 or later
+github "sgr-ksmt/PullToDismiss" ~> 2.2
+# Swift 3
+github "sgr-ksmt/PullToDismiss", 2.1
 ```
 
 - Run `carthage update`
@@ -151,7 +154,10 @@ github "sgr-ksmt/PullToDismiss" ~> 2.1
 it, simply add the following line to your Podfile:
 
 ```ruby
-pod 'PullToDismiss', '~> 2.1'
+# Swift 5.0 or later
+pod 'PullToDismiss', '~> 2.2'
+# Swift 3
+pod 'PullToDismiss', '2.1'
 ```
 
 and run `pod install`
